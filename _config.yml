@@ -1,5 +1,5 @@
 title: Keep bragging
 logo: /resources/img/logo.png
-description: My notes on technologies, coding, and algorithms
-show_downloads: true
+description: Notes on technologies, coding, and algorithms
+show_downloads: false
 theme: jekyll-theme-slate
