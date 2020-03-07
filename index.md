@@ -1,4 +1,6 @@
 # Technologies
+I build software solutions to be deployed in cloud. In past, I have used many technologies in infrastructure, storage, search, cache, and streaming.
+
 ## Cloud computing with AWS
 - Cloudformation
 - IAM
@@ -30,6 +32,8 @@
 ## Druid
 
 # Algorithms
+In the work, I have used several data structures and algorithms to improve computing performance and reduce glitches.
+
 ## Data structure
 - Array
 - LinkedList
@@ -53,7 +57,10 @@
 ## Dynamic programming
 
 # Coding
+My work started from C/C++, then moved to .net framework and C# (certifed Microsoft C# developer). an then I changed back to C/C++ and Linux development, I used a lot of python  to automate C/C++ programs. Most recently, I used Java and ReactJS for full stack development.
+
 ## C/C++
 ## Java
 ## Python
 ## Javascript/React
+## C#
