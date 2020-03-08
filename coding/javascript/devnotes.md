@@ -22,13 +22,28 @@ JSX addresses the fact that rendering logic is coupled with other UI logic: even
 ```javascript
 // Define data
 const user_joe = {
-  firstName = "Joseph",
-  lastName = "Biden"
+  firstName: "Joseph",
+  lastName: "Biden"
 };
 
 // Defined element to render
-const element_joe = (<h1> Hi, {user_joe.firstName} {user_joe.lastName}!</h1>);
-
-ReactDOM.render(element_joe, document.getElementById('root'));
+function Greeting(user) {
+    return (<h1> Hi, {user.firstName} {user.lastName}!</h1>);
+}
+//const joe = <Greeting firstName={user_joe.firstName} lastName={user_joe.lastName} /> 
+ReactDOM.render(Greeting(user_joe), document.getElementById('root'));
 ```
- 
+
+# rendering
+
+Rendering takes 3 steps:
+- Create an element (1) in HTML for rendering
+- Create an element (2) to be rendered to the HTML element
+- Call ReactDOM.render to insert (2) into (1)
+
+For the example in JSX basics, the html is defined as
+```html
+<html>
+<div id="root" />
+</html>
+```
