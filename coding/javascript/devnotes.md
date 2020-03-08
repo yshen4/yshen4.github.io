@@ -19,10 +19,16 @@ JSX is a syntax extension to Javascript, which produces React "elements".
 
 JSX addresses the fact that rendering logic is coupled with other UI logic: event handling, state changes, and data.
 
-```
-const name = "Joe Biden";
-const element_name = <h1> Hi, {name}</h1>;
+```javascript
+// Define data
+const user_joe = {
+  firstName = "Joseph",
+  lastName = "Biden"
+};
 
-ReactDOM.render(element_name, document.getElementById('root'));
+// Defined element to render
+const element_joe = (<h1> Hi, {user_joe.firstName} {user_joe.lastName}!</h1>);
+
+ReactDOM.render(element_joe, document.getElementById('root'));
 ```
  
