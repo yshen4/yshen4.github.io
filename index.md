@@ -63,4 +63,5 @@ My work started from C/C++, then moved to .net framework and C# (certifed Micros
 ## Java
 ## Python
 ## Javascript/React
+- [ReactJS concepts](coding/javascript/dev.notes)
 ## C#
