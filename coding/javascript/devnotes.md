@@ -12,3 +12,17 @@ A list of basic concepts for ReactJS:
 - [Lifting State Up](https://reactjs.org/docs/lifting-state-up.html)
 - [Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
 - [Thinking In React](https://reactjs.org/docs/thinking-in-react.html)
+
+# JSX basics
+
+JSX is a syntax extension to Javascript, which produces React "elements". 
+
+JSX addresses the fact that rendering logic is coupled with other UI logic: event handling, state changes, and data.
+
+```
+const name = "Joe Biden";
+const element_name = <h1> Hi, {name}</h1>;
+
+ReactDOM.render(element_name, document.getElementById('root'));
+```
+ 
