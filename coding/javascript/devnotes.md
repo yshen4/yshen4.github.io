@@ -62,3 +62,36 @@ function tick() {
 
 setInterval(tick, 1000);
 ```
+
+# Components and props
+
+There are 2 ways to define a component:
+- Define a function
+- Extend a class from React.Component, and implement its render() function. Input parameters are passed in this.props object.
+
+```javascript
+function Greeting(user) {
+  return <li>Welcome, {user.firstName} {user.lastName}</li>
+}
+
+class Greeting extends React.Component {
+  render() {
+    return <li>Welcome, {this.props.firstName} {this.props.lastName}</li>
+  }
+}
+```
+The usage is the same, both function and class name can be used as element name, with attributes as input parameter (props), user defined components.
+
+With components, we can compose more complicated UI, for example, a list of greetings:
+```
+function All() {
+  return (<ul>
+      <Greeting firstName="Joe" lastName="Biden"/>
+      <Greeting firstName="Sarah" lastName="Biden"/>
+      <Greeting firstName="Doug" lastName="Biden"/>
+      <Greeting firstName="Eva" lastName="Biden"/>
+    </ul>);
+}
+
+ReactDOM.render( <All />, document.getElementById('root'));
+```
