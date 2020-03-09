@@ -83,7 +83,7 @@ class Greeting extends React.Component {
 The usage is the same, both function and class name can be used as element name, with attributes as input parameter (props), user defined components.
 
 With components, we can compose more complicated UI by referring to other components (predefined or user defined). For example, a list of greetings:
-```
+```javascript
 function All() {
   return (<ul>
       <Greeting firstName="Joe" lastName="Biden"/>
@@ -120,6 +120,7 @@ function Comment(props) {
   );
 }
 ```
+
 From the HTML layers, we can find 3 layers: 
 - Comment
   - UserInfo
@@ -127,7 +128,8 @@ From the HTML layers, we can find 3 layers:
     - UserInfoName
   - CommentText
   - CommentDate
-```
+
+```javascript
 function Avatar(author) {
     return (<img className="Avatar" src={author.avatarUrl} alt={author.name} />);
 }
