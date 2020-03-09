@@ -82,7 +82,7 @@ class Greeting extends React.Component {
 ```
 The usage is the same, both function and class name can be used as element name, with attributes as input parameter (props), user defined components.
 
-With components, we can compose more complicated UI, for example, a list of greetings:
+With components, we can compose more complicated UI by referring to other components (predefined or user defined). For example, a list of greetings:
 ```
 function All() {
   return (<ul>
@@ -95,3 +95,68 @@ function All() {
 
 ReactDOM.render( <All />, document.getElementById('root'));
 ```
+
+Given the composition, we can restructure a nesting UI component into a structured architecture:
+```javascript
+function Comment(props) {
+  return (
+    <div className="Comment">
+      <div className="UserInfo">
+        <img className="Avatar"
+          src={props.author.avatarUrl}
+          alt={props.author.name}
+        />
+        <div className="UserInfo-name">
+          {props.author.name}
+        </div>
+      </div>
+      <div className="Comment-text">
+        {props.text}
+      </div>
+      <div className="Comment-date">
+        {formatDate(props.date)}
+      </div>
+    </div>
+  );
+}
+```
+From the HTML layers, we can find 3 layers: 
+- Comment
+  - UserInfo
+    - Avatar
+    - UserInfoName
+  - CommentText
+  - CommentDate
+```
+function Avatar(author) {
+    return (<img className="Avatar" src={author.avatarUrl} alt={author.name} />);
+}
+
+function UserInfoName(author) {
+    return (<div className="UserInfo-name">{author.name}</div>);
+}
+
+function CommentText(text) {
+    return (<div className="Comment-Text">{text}</div>);
+}
+
+function CommentDate(date) {
+    return (<div className="Comment-date">{formatDate(date)}</div>);
+}
+
+function UserInfo(props) {
+    return (<div className="UserInfo">
+                <Avatar author={props.author} />
+                <UserInfoName author={props.author} />
+           </div>);
+}
+
+function Comment(props) {
+    return (<div>
+                <UserInfo author ={props.author} />
+                <CommentText text={props.text} />
+                <CommentDate text={props.date} />
+            </div>);
+}
+```
+
