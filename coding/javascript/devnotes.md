@@ -1,9 +1,9 @@
 # Basics
 
 A list of basic concepts for ReactJS:
-- [JSX basics](https://reactjs.org/docs/introducing-jsx.html)
-- [rendering](https://reactjs.org/docs/rendering-elements.html) 
-- [Components and Props](https://reactjs.org/docs/components-and-props.html)
+- [JSX basics](#jsx-basics)
+- [rendering](#rending) 
+- [Components and Props](#components-and-props)
 - [State and Lifecycle](https://reactjs.org/docs/state-and-lifecycle.html)
 - [Handling Events](https://reactjs.org/docs/handling-events.html)
 - [Conditional Rendering](https://reactjs.org/docs/conditional-rendering.html)
@@ -14,6 +14,8 @@ A list of basic concepts for ReactJS:
 - [Thinking In React](https://reactjs.org/docs/thinking-in-react.html)
 
 # JSX basics
+
+[Reference](https://reactjs.org/docs/introducing-jsx.html)
 
 JSX is a syntax extension to Javascript, which produces React "elements". 
 
@@ -35,6 +37,8 @@ ReactDOM.render(Greeting(user_joe), document.getElementById('root'));
 ```
 
 # rendering
+
+[Reference](https://reactjs.org/docs/rendering-elements.html) 
 
 Rendering takes 3 steps:
 - Create an element (1) in HTML for rendering
@@ -64,6 +68,8 @@ setInterval(tick, 1000);
 ```
 
 # Components and props
+
+[Reference](https://reactjs.org/docs/components-and-props.html)
 
 There are 2 ways to define a component:
 - Define a function
