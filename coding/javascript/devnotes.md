@@ -123,42 +123,58 @@ function Comment(props) {
 
 From the HTML layers, we can find 3 layers: 
 - Comment
-  - UserInfo
+  1. UserInfo
     - Avatar
     - UserInfoName
-  - CommentText
-  - CommentDate
+  2. CommentText
+  3. CommentDate
 
 ```javascript
-function Avatar(author) {
-    return (<img className="Avatar" src={author.avatarUrl} alt={author.name} />);
+function formatDate(date) {
+  return date.toLocaleDateString();
 }
 
-function UserInfoName(author) {
-    return (<div className="UserInfo-name">{author.name}</div>);
+function Avatar(props) {
+    return <img src={props.author.avatarUrl} alt={props.author.name} />;
 }
 
-function CommentText(text) {
-    return (<div className="Comment-Text">{text}</div>);
+function UserInfoName(props) {
+    return (<div className="Userinfo-name">{props.user.name}</div>);
 }
 
-function CommentDate(date) {
-    return (<div className="Comment-date">{formatDate(date)}</div>);
+function CommentText(props) {
+    return (<div className="Comment-text">{props.text}</div>);
+}
+
+function CommentDate(props) {
+    return (<div className="Comment-date">{formatDate(props.date)}</div>);
 }
 
 function UserInfo(props) {
     return (<div className="UserInfo">
                 <Avatar author={props.author} />
-                <UserInfoName author={props.author} />
+                <UserInfoName user={props.author} />
            </div>);
 }
 
 function Comment(props) {
-    return (<div>
-                <UserInfo author ={props.author} />
-                <CommentText text={props.text} />
-                <CommentDate text={props.date} />
-            </div>);
+    return (<div> 
+        <UserInfo author ={props.author} /> 
+        <CommentText text = {props.text} />
+        <CommentDate date = {props.date} />
+      </div>);
 }
+
+const author_yue = {
+  avatarUrl: "https://cdn1.thr.com/sites/default/files/imagecache/768x433/2019/03/avatar-publicity_still-h_2019.jpg",
+  name: "Yue"
+};
+
+const date_now = new Date();
+
+ReactDOM.render(
+  <Comment author= {author_yue} date={date_now} text="whatever it is" />,
+  document.getElementById('root')
+);
 ```
 
