@@ -217,7 +217,8 @@ To convert the above example with state, we need to:
 - change it from function to class
 - Add a constructor, and initiaite this.state.date
 - render the state.date 
-```
+
+```javascript
 class Clock extends React.Component {
   constructor(props) {
     super(props);
