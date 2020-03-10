@@ -4,7 +4,7 @@ A list of basic concepts for ReactJS:
 - [JSX basics](#jsx-basics)
 - [rendering](#rendering) 
 - [Components and Props](#components-and-props)
-- [State and Lifecycle](#state-and-lifecyle)
+- [State and Lifecycle](#state-and-lifecycle)
 - [Handling Events](https://reactjs.org/docs/handling-events.html)
 - [Conditional Rendering](https://reactjs.org/docs/conditional-rendering.html)
 - [Lists and Keys](https://reactjs.org/docs/lists-and-keys.html)
