@@ -2,9 +2,9 @@
 
 A list of basic concepts for ReactJS:
 - [JSX basics](#jsx-basics)
-- [rendering](#rending) 
+- [rendering](#rendering) 
 - [Components and Props](#components-and-props)
-- [State and Lifecycle](https://reactjs.org/docs/state-and-lifecycle.html)
+- [State and Lifecycle](#state-and-lifecyle)
 - [Handling Events](https://reactjs.org/docs/handling-events.html)
 - [Conditional Rendering](https://reactjs.org/docs/conditional-rendering.html)
 - [Lists and Keys](https://reactjs.org/docs/lists-and-keys.html)
@@ -70,6 +70,9 @@ setInterval(tick, 1000);
 # Components and props
 
 [Reference](https://reactjs.org/docs/components-and-props.html)
+
+A component should never change its props, with the same input, output is the same (pure function).
+**All React components must act like pure functions with respect to their props.**
 
 There are 2 ways to define a component:
 - Define a function
@@ -183,4 +186,84 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
+## State and Lifecycle
+
+[Reference](https://reactjs.org/docs/state-and-lifecycle.html)
+
+State is similar to props, but it is private and fully controlled by the component.
+
+Example to show clock with function
+```
+function Clock(props) {
+  return (
+    <div>
+      <h2>Time: {props.date.toLocaleTimeString()}.</h2>
+    </div>
+  );
+}
+
+function tick() {
+  ReactDOM.render(
+    <Clock date={new Date()} />,
+    document.getElementById('root')
+  );
+}
+
+setInterval(tick, 1000);
+```
+
+To convert the above example with state, we need to:
+- change it from function to class
+- Add a constructor, and initiaite this.state.date
+- render the state.date 
+```
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()}; //initiate state.date
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>Time: {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+
+  //Lifecycle methods
+  componentDidMount() {
+    this.timerID = setInterval( () => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  // Utility function to set state
+  tick() {
+    this.setState( { date: new Date() });
+  }
+}
+
+function All() {
+  return (<div>
+    <Clock />
+    <Clock />
+    <Clock />
+  </div>);
+}
+ReactDOM.render(
+  <All />,
+  document.getElementById('root')
+);
+```
+Notes about the state:
+- Don't set state.date explicitly: this.state.date = new Date(), instead use this.setState({date: new Date()}).
+  The only place assign this.state is the constructor
+- State update may be asynchronous, therefore pass in the parameters
+  this.setState( (state, props) => ... );
+- State update are merged
+- Data flows down
 
