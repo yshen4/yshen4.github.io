@@ -1,5 +1,5 @@
 # Technologies
-![bragging](/resourses/img/logo.png)
+![bragging](/resources/img/logo.png)
 I build software solutions to be deployed in cloud. In past, I have used many technologies in infrastructure, storage, search, cache, and streaming.
 
 ## Cloud computing with AWS
