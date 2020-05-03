@@ -1,5 +1,5 @@
 # Technologies
-![bragging](resourses/img/logo.png)
+![bragging](/resourses/img/logo.png)
 I build software solutions to be deployed in cloud. In past, I have used many technologies in infrastructure, storage, search, cache, and streaming.
 
 ## Cloud computing with AWS
@@ -27,12 +27,18 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 - Rate limiter with Redis
 
 ## ZooKeeper
+- Deploy ZooKeeper on AWS
 
 ## Kafka
+- Deploy Kafka on AWS
+- Kafka streaming
 
 ## Druid
+- Deploy Druid on AWS
+- Druid modelling
+- Integrate Druide with Kafka Streaming
 
-# Algorithms
+# Algorithms in C++
 In the work, I have used several data structures and algorithms to improve computing performance and reduce glitches.
 
 ## Data structure
@@ -57,8 +63,18 @@ In the work, I have used several data structures and algorithms to improve compu
 
 ## Dynamic programming
 
+Important DP problems and algorithm design:
+- Shortest path
+- Text justification
+- Edit distance
+- Parenthesization
+- Knapsack
+- Blackjack
+ 
+Reference: [MIT open course on Youtube ](https://www.youtube.com/playlist?list=PLcDimPvbmfT8qAxD6JH_kmXiQwTNcoK78) 
+
 # Coding
-My work started from C/C++, then moved to .net framework and C# (certifed Microsoft C# developer). an then I changed back to C/C++ and Linux development, I used a lot of python  to automate C/C++ programs. Most recently, I used Java and ReactJS for full stack development.
+My work started with C/C++, then moved to .net framework and C# (certifed Microsoft C# developer). Thereafter, I came back to C/C++ and Linux development. I used a lot of python to automate C/C++ programs. Most recently, I used Java and ReactJS for full stack development.
 
 ## C/C++
 ## Java

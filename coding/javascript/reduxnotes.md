@@ -90,7 +90,7 @@ pipe(trimStr,
 //Output: <span>javascript</span>
 ```
 
-### Purse function
+### Pure function
 Rules for pure functions:
 - No random function call
 - No current date/time
@@ -161,7 +161,7 @@ updatedPerson.address.city = "New York";
 console.log(person);
 console.log(updatedPerson);
 //Ouput: {name: "Yue", address: { country: "USA", city: "New York"} }
-//Ouput: {name: "Ye", job: "Engineer", { country: "USA", city: "New York"} }
+//Ouput: {name: "Ye", job: "Engineer", address: { country: "USA", city: "New York"} }
 ```
 
 In order to avoid this problem, we need to use spread operator on the nested data too
@@ -171,6 +171,42 @@ const updatedPerson = {...person, name: "Ye", job: "Engineer", address: { city: 
 console.log(person);
 console.log(updatedPerson);
 //Ouput: {name: "Yue", address: { country: "USA", city: "Los Angeles"} }
-//Ouput: {name: "Ye", job: "Engineer", { country: "USA", city: "New York"} }
+//Ouput: {name: "Ye", job: "Engineer", address: { country: "USA", city: "New York"} }
 ```
 
+### Array operation
+- Append a new value
+- Remove a value
+- Update a value
+
+```
+const data = [1, 2, 3, 4, 5, 6, 7];
+//Append to the end
+const appended = [...data, 8];
+console.log(appended);
+
+//Append to the start
+const prended = [0, ...data]
+console.log(prended);
+
+//Insert before 4
+const index = data.indexOf(4);
+const inserted = [...data.slice(0, index),
+                  9,
+                  ...data.slice(index)];
+console.log(inserted);
+
+//Remove a value 4
+const removed = data.filter( v => v !== 4 );
+console.log(removed);
+
+//Update a value 4 -> 16
+const updated = data.map( v => v === 4 ? 16 : v );
+console.log(updated); 
+
+```
+
+Javascript doesn't guarantee immutability, some libraries come handy:
+- immutable
+- immer
+- mori 
