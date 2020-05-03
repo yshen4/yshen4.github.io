@@ -65,5 +65,6 @@ My work started from C/C++, then moved to .net framework and C# (certifed Micros
 ## Python
 ## Javascript/React
 - [ReactJS concepts](coding/javascript/devnotes.md)
+- [Redux concepts](coding/javascript/reduxnotes.md)
 
 ## C#
