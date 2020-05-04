@@ -49,3 +49,95 @@ For example:
     }]
 }
 ```
+
+# Cloudformation in action
+
+troposphere: a python package to write in python and generate cloudlformation
+
+## Cloudformation structure
+
+A cloudformation templates have the following elements, all optional except resources:
+- AWSTemplateFormatVersion: "2012-10-17"
+- Description
+- Metadata
+- Mappings
+- Conditions
+- Paramters: will be asked to input when creating AWS stack with the template.
+- Resources: required, staticaly created resources.
+- Outputs: will be returned upon creation
+
+For example:
+```json
+{
+  "AWSTemplateFormatVersion" : "version date",
+  "Description" : "JSON string",
+  "Metadata" : {
+    "Comment": "template metadata"
+  },
+  "Parameters" : {
+    "Comment": "set of parameters",
+    "SSHLocation": {
+      "Description": "The IP address range that can be used to SSH to the EC2 instances",
+      "Type": "String",
+      "MinLength": "9",
+      "MaxLength": "18",
+      "Default": "0.0.0.0/0",
+      "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+      "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
+    },
+    "KeyPair" : {
+      "Description": "EC2 access key",
+      "Type": "String"
+    }
+  },
+  "Resources" : {
+    "Comment": "set of resources",
+    "EC2SecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Enable SSH access",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          }
+        ]
+      }
+    },
+    "EC2Instance": {
+      "Properties": {
+        "ImageId": "",
+        "InstanceType": "",
+        "KeyName": {
+          "Ref": "KeyPair"
+        },
+        "SecurityGroups": [ {"Ref": "EC2ServerSecurityGroup"} ]
+      },
+      "Type": "AWS::EC2::Instance"
+    }
+  },
+  "Mappings" : {
+    "Comment": "set of mappings"
+  },
+  "Conditions" : {
+    "Comment": "set of conditions"
+  },
+  "Transform" : {
+    "Comment": "set of transforms"
+  },
+  "Outputs" : {
+    "Comment": "set of outputs returned when the stack is created",
+    "InstanceId": {
+      "Value": { "Ref": "EC2Instance" }
+    }
+  }
+}
+```
+
+## Create templates
+
+## 
