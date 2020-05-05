@@ -81,6 +81,7 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 ## Java
 ## Python
 ## Javascript/React
+- [Javascript concepts](coding/javascript/javascript.md)
 - [ReactJS concepts](coding/javascript/devnotes.md)
 - [Redux concepts](coding/javascript/reduxnotes.md)
 
