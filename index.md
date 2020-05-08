@@ -3,8 +3,7 @@
 I build software solutions to be deployed in cloud. In past, I have used many technologies in infrastructure, storage, search, cache, and streaming.
 
 ## Cloud computing with AWS
-- Cloudformation
-  - [Cloudformation concepts](infrastructure/AWS/conceptnotes.md)
+- [Cloudformation concepts](infrastructure/AWS/conceptnotes.md)
 - IAM
 - EC2
 - S3
