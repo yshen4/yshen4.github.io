@@ -86,3 +86,9 @@ const findOwner = (animal) => {
   console.log(`${name} is ownned by ${ownerName}`);
 };
 ```
+
+## 3. Use spread operator for copying and cloning
+
+## 4. Javascript stream APIs: filter, map, and reduce
+
+## 5. async and wait
