@@ -36,14 +36,49 @@ console.log( '%cPets', 'color: orange; font-weight: b');
 // Set a timer
 console.time('timer_check');
 
-// See variable name
 console.trace('Log with variable names');
 console.log( {dog, cat, lizard} );
 
-// A better way is to see it in a table
+// A better way is to log them in a table
+// We can use {} or [], I prefer {} because the indices are variable names instead of numbers
 console.trace('Log in a table');
 console.table( {dog, cat, lizard} );
 
 // End a timer
 console.timeEnd('timer_check');
 ```
+
+## 2. Use destructuring to get members from a complex object
+
+### Problem
+
+A lot of times we receive a complex object, and only need several of its members. 
+
+### Classic usage
+
+```javascript
+const dog = { name: 'bar bark', age: 3, color: 'brown', weight: 25, owner: { name: 'Yue', state: 'California' } };
+
+const findOwner = (animal) => {
+  console.log(`${animal.name} is ownned by ${animal.owner.name}`);
+};
+
+```
+
+### Analysis and best practice
+
+Use destructuring to simplify the variable reference
+- Only get needed members from the object;
+- Support nested structures 
+- Support renaming to avoid name confliction
+
+```javascript
+const findOwner = (animal) => {
+  // owner.name is nested, to destructure it, need owner for destructuring, then name as nested field.
+  // animal.name and owner.name are conflicting, therefore we rename the owner.name as ownerName after destructuring
+  const { name, owner: {name: ownerName} } = animal;
+
+  console.log(`${name} is ownned by ${ownerName}`);
+};
+
+
