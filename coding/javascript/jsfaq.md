@@ -71,12 +71,17 @@ Use destructuring to simplify the variable reference
 - Only get needed members from the object;
 - Support nested structures 
 - Support renaming to avoid name confliction
+- Support default value
 
 ```javascript
 const findOwner = (animal) => {
   // owner.name is nested, to destructure it, need owner for destructuring, then name as nested field.
   // animal.name and owner.name are conflicting, therefore we rename the owner.name as ownerName after destructuring
-  const { name, owner: {name: ownerName} } = animal;
+  // In case owner is undefined, use {} as default, in which name is undefined, but the code won't throw exception
+  const { name, owner: {name: ownerName} = {} } = animal;
+  
+  // We can also provide default value to ownerName in case owner isn't defined
+  //const { name, owner: {name: ownerName = "unknown"} = {} } = animal;
 
   console.log(`${name} is ownned by ${ownerName}`);
 };
