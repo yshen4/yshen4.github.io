@@ -85,5 +85,4 @@ const findOwner = (animal) => {
 
   console.log(`${name} is ownned by ${ownerName}`);
 };
-
-
+```
