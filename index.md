@@ -1,5 +1,6 @@
 # Technologies
 ![bragging](/resources/img/logo.png)
+
 I build software solutions to be deployed in cloud. In past, I have used many technologies in infrastructure, storage, search, cache, and streaming.
 
 ## Cloud computing with AWS
@@ -9,8 +10,6 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 - S3
 - DynamoDB
 - RDB
-
-## Docker and Kubernetes
 
 ## Cassandra
 - Deploy Cassandra on AWS
@@ -81,7 +80,10 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 ## Python
 ## Javascript/React
 - [Javascript concepts](coding/javascript/javascript.md)
+- [Javascript FAQ](coding/javascript/jsfaq.md)
 - [ReactJS concepts](coding/javascript/devnotes.md)
 - [Redux concepts](coding/javascript/reduxnotes.md)
 
 ## C#
+
+# Docker and Kubernetes
