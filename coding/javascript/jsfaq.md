@@ -92,3 +92,110 @@ const findOwner = (animal) => {
 ## 4. Javascript stream APIs: filter, map, and reduce
 
 ## 5. async and wait
+
+## 6. Ajax
+
+There are several ways to make ajax call in javascript
+- XMLHttpRequest
+- Fetch
+- Axios
+- jQuery
+- request
+
+## 6.1 XMLHttpRequest
+
+```
+function callAjaxGet(url, callback) {
+  const http = new XMLHttpRequest();
+  http.open("GET", url);
+  http.send();
+  http.onreadystatechange= (e) => {
+    callback(e, http.responseText)
+  }
+}
+
+function callAjaxPost(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/submit', true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = (e) => callback(e, xhr.responseText);
+  xhr.send(`${url}?name=foo&id=1`);
+}
+
+callAjaxGet('www.google.com', (e, resp) => { 
+    console.table(e);
+    console.log(resp);
+});
+
+callAjaxPost('www.google.com/', (e, resp) => {
+  console.table(e);
+  console.log(resp);
+});
+```
+
+## 6.2 Fetch API
+Pros of using Fetch API
+- It’s flexible and easy to use
+- Callback hell is avoided by Promises
+- Supported by all modern browsers
+- Follows request-response approach
+
+Cons of using Fetch API
+- Doesn’t send cookie by default
+- CORS is disabled by default
+
+```
+fetch('https://www.google.com', {
+        method: 'get', mode: "no-cors"
+    })
+    .then(response => console.log(response))
+    .catch(err => console.log(err));
+
+```
+
+## 6.3 Axios
+
+```javascript
+axios.get('/get-user', {
+    params: {
+      ID: 1
+    }
+  })
+  .then( (response) => console.log(response) )
+  .catch((err) => console.log(err) )
+  .then( () => {
+    // always executed
+  });
+```
+
+## 6.4 jQuery
+
+```
+$.ajax({
+    url: '/users',
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+        console.log(data);
+    },
+    error: function (error) {
+        console.log(`Error ${error}`);
+    }
+});
+```
+
+## 6.5 Request
+
+Use javascript request library to do HTTP calls
+
+```
+var request = require('request');
+request('http://www.yourdomain.com', function (error, response, body) {
+  console.log('error:', error);
+  console.log('statusCode:', response && response.statusCode); 
+  console.log('body:', body);
+});
+```
+# References
+[1] https://www.slideshare.net/teppeis/effective-es6
+[2] 
