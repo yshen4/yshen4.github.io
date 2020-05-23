@@ -1,5 +1,11 @@
 # CDK basics
 
+AWS CloudFormation enables developers to create and provision AWS infrastructure deployments predictably and repeatedly with a template file.
+
+However, CloudFromation template is very hard to write and maintain. AWS CDK allows developers to define reusable cloud components (constructs) in a familiar programming language, which can be composed into Stacks and Apps.
+
+![CDK architecture](/resources/img/cdkAppStacks.png)
+
 The AWS CDK Toolkit (cdk command-line tool) and the AWS Construct Library are developed in TypeScript and run on Node.js.
 
 ## Prerequisites
