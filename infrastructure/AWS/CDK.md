@@ -87,5 +87,75 @@ aws_access_key_id=AKIAI44QH8DHBEXAMPLE
 aws_secret_access_key=je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
 region=us-west-1
 ```
+
+## A quick start
+
+### Create an app folder
+
+```
+# Create a folder
+mkdir zkStack
+cd zkStack
+```
+
+### Initialize the app
+
+```
+# cdk init --language LANGUAGE [TEMPLATE]
+# LANGUAGE = csharp | typescript | javascript | python | java
+# TEMPLATE = app (default) | sample-app
+cdk init --language typescript
+```
+
+Useful commands:
+ * `npm run build`   compile typescript to js
+ * `npm run watch`   watch for changes and compile
+ * `npm run test`    perform the jest unit tests
+ * `cdk deploy`      deploy this stack to your default AWS account/region
+ * `cdk diff`        compare deployed stack with current state
+ * `cdk synth`       emits the synthesized CloudFormation template
+
+### Compile the app
+
+```
+npm run build
+```
+
+After compilation, list the stacks in the app:
+```
+cdk ls
+
+# >> ZkStackStack
+```
+
+### Add business logic
+
+Adding an Amazon S3 bucket
+- Install cdk S3
+```
+npm install @aws-cdk/aws-s3
+``` 
+- Add construct to lib/zk_stack-stack.ts
+```
+//...
+import * as s3 from '@aws-cdk/aws-s3';
+
+export class ZkStackStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+    //...
+    // Add S3 bucket
+    // 'zkStackBucket' is the logic name in CloudFormation, not bucket name (globally unique)
+    new s3.Bucket(this, 'zkStackBucket', {
+      versioned: true
+    });
+  }
+}
+```
+- Compile with 'nmp run build'
+- Synthesizing an AWS CloudFormation template
+```
+cdk synth
+```
+
 # References
 \[1\] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
