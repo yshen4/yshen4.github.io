@@ -88,6 +88,33 @@ const findOwner = (animal) => {
 ```
 
 ## 3. Use spread operator for copying and cloning
+Spread syntax allows an iterable such as an array or string to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected
+
+### spread on array
+```
+const first = [1, 2, 3];
+const second = [4, 5, 6];
+
+// use concat
+first.concat(second);
+
+// use spread operator
+[...first, ...second];
+
+// clone with spread
+const clone = [...first];
+```
+### spread on object
+```
+const namePart = { name: "Yue"};
+const jobPart = { job: "Engineer"};
+
+const combined = {...namePart, ...jobPart, location: "los angeles"};
+
+// clone with spread
+const clone = {...combined};
+```
+
 
 ## 4. Javascript stream APIs: filter, map, and reduce
 
@@ -198,4 +225,4 @@ request('http://www.yourdomain.com', function (error, response, body) {
 ```
 # References
 [1] https://www.slideshare.net/teppeis/effective-es6
-[2] 
+[2] https://www.w3schools.com/jquery/ajax_ajax.asp
