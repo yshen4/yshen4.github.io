@@ -108,12 +108,12 @@ cdk init --language typescript
 ```
 
 Useful commands:
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+- `npm run build`   compile typescript to js
+- `npm run watch`   watch for changes and compile
+- `npm run test`    perform the jest unit tests
+- `cdk deploy`      deploy this stack to your default AWS account/region
+- `cdk diff`        compare deployed stack with current state
+- `cdk synth`       emits the synthesized CloudFormation template
 
 ### Compile the app
 
@@ -135,8 +135,9 @@ Adding an Amazon S3 bucket
 ```
 npm install @aws-cdk/aws-s3
 ``` 
+
 - Add construct to lib/zk_stack-stack.ts
-```
+```typescript
 //...
 import * as s3 from '@aws-cdk/aws-s3';
 
@@ -151,6 +152,7 @@ export class ZkStackStack extends cdk.Stack {
   }
 }
 ```
+
 - Compile with 'nmp run build'
 - Synthesizing an AWS CloudFormation template
 ```
@@ -167,7 +169,7 @@ cdk deploy --profile beta
 
 Add encryption to the S3: encryption: s3.BucketEncryption.KMS_MANAGED
 
-```
+```shell
 // Compile the change
 npm run build
 
