@@ -157,5 +157,29 @@ export class ZkStackStack extends cdk.Stack {
 cdk synth
 ```
 
+### Deploy
+
+```
+cdk deploy --profile beta
+```
+
+### Make change and update the stack
+
+Add encryption to the S3: encryption: s3.BucketEncryption.KMS_MANAGED
+
+```
+// Compile the change
+npm run build
+
+// Check difference
+cdk diff --profile beta
+
+// Deploy again
+cdk deploy --profile beta
+
+// Destroy the stack
+cdk destroy --profile beta
+```
+
 # References
 \[1\] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
