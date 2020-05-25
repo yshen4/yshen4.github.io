@@ -33,6 +33,9 @@ npx npm-check-updates -u
 # Install cdk
 npm install -g aws-cdk
 
+# Install typescript 
+npm install -g typescript
+
 # Check cdk version
 cdk --version
 ```
@@ -186,5 +189,55 @@ cdk deploy --profile beta
 cdk destroy --profile beta
 ```
 
-# References
+## Concepts
+
+### Construct
+Constructs are the basic building blocks of AWS CDK apps. A construct represents a "cloud component" and encapsulates everything AWS CloudFormation needs to create the component.
+
+A construct can represent a single resource, such as an Amazon Simple Storage Service (Amazon S3) bucket, or it can represent a higher-level component consisting of multiple AWS CDK resources.
+
+#### AWS Construct library
+AWS Construct Library contains constructs representing AWS resources. There are 3 levels of AWS constructs
+- Low level construct: CFN Resources, which include all of the AWS resources that are available in AWS CloudFormation. They are named CfnXyz, where Xyz represents the name of the resource. For example, s3.CfnBucket represents the AWS::S3::Bucket CFN Resource.
+- Middle level construct: represent AWS resources, but with a higher-level, intent-based API, which handle much of the details, boilerplate, and glue logic required by CFN constructs. For example, the s3.Bucket class represents an Amazon S3 bucket with additional properties and methods, such as bucket.addLifeCycleRule(), which adds a lifecycle rule to the bucket.
+- High level contruct: patterns. These constructs are designed to help you complete common tasks in AWS, often involving multiple kinds of resources. For example, the aws-ecs-patterns.ApplicationLoadBalancedFargateService construct represents an architecture that includes an AWS Fargate container cluster employing an Application Load Balancer (ALB)
+
+#### Composition
+The key pattern for defining higher-level abstractions through constructs is called composition. 
+
+A high-level construct can be composed from a number of lower-level constructs, and in turn, those could be composed from even lower-level constructs. To enable this pattern, constructs are always defined within the scope of another construct. This scoping pattern results in a hierarchy of constructs known as a construct tree. 
+
+In the AWS CDK, the root of the tree represents the entire AWS CDK app. Within the app, you typically define one or more stacks, which are the unit of deployment, analogous to AWS CloudFormation stacks. Within stacks, you define resources, or other constructs that eventually contain resources.
+
+#### Initialization
+All contructs extends cdk.Contruct base class, which takes 3 parameters:
+- Scope – The construct within which this construct is defined
+- id – An identifier that must be unique within this scope
+- Props – A set of properties or keyword arguments that define the construct's initial configuration
+
+#### Apps and Stacks
+CDK application (app) extends the AWS CDK class App. CDK Stacks in AWS CDK apps extend the Stack base class. Using import keyword to load dependent constructs into the module. 
+
+```
+import { App, Stack, StackProps } from '@aws-cdk/core';
+import * as s3 from '@aws-cdk/aws-s3';
+
+class HelloCdkStack extends Stack {
+  //A stack has a scope of app
+  constructor(scope: App, id: string, props?: StackProps) {
+    super(scope, id, props);
+
+    // A contruct has a scope of stack
+    new s3.Bucket(this, 'MyFirstBucket', {
+      versioned: true
+    });
+  }
+}
+
+const app = new App();
+new HelloCdkStack(app, "HelloCdkStack");
+```
+
+## References
 \[1\] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+\[2\] [Working with CDK Typscript](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html)
