@@ -132,12 +132,14 @@ cdk ls
 
 Adding an Amazon S3 bucket
 - Install cdk S3
+
 ```
 npm install @aws-cdk/aws-s3
 ``` 
 
 - Add construct to lib/zk_stack-stack.ts
-```typescript
+
+```
 //...
 import * as s3 from '@aws-cdk/aws-s3';
 
@@ -155,6 +157,7 @@ export class ZkStackStack extends cdk.Stack {
 
 - Compile with 'nmp run build'
 - Synthesizing an AWS CloudFormation template
+
 ```
 cdk synth
 ```
@@ -169,7 +172,7 @@ cdk deploy --profile beta
 
 Add encryption to the S3: encryption: s3.BucketEncryption.KMS_MANAGED
 
-```shell
+```
 // Compile the change
 npm run build
 
