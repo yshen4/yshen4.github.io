@@ -238,6 +238,77 @@ const app = new App();
 new HelloCdkStack(app, "HelloCdkStack");
 ```
 
+#### Configuration (props)
+
+Contruct accept props as the third argument which is a name/value collection that defines the construct's configuration.
+
+```
+new s3.Bucket(this, 'MyEncryptedBucket', {
+  encryption: s3.BucketEncryption.KMS,
+  websiteIndexDocument: 'index.html'
+});
+```
+
+#### Interact with contruct instances
+
+Constructs are classes that extend the base Construct class. After you instantiate a construct, the construct object exposes a set of methods and properties that enable you to interact with the construct and pass it around as a reference to other parts of the system.
+
+```
+// Define the S3 bucket
+const rawData = new s3.Bucket(this, 'raw-data');
+
+// Define the IAM group
+const dataScience = new iam.Group(this, 'data-science');
+
+// Grant the READ permission for rawData to dataScience group 
+rawData.grantRead(dataScience);
+```
+
+Another common pattern is for AWS constructs to set one of the resource's attributes, such as its Amazon Resource Name (ARN), name, or URL from data supplied elsewhere:
+
+```
+const jobsQueue = new sqs.Queue(this, 'jobs');
+const createJobLambda = new lambda.Function(this, 'create-job', {
+  runtime: lambda.Runtime.NODEJS_10_X,
+  handler: 'index.handler',
+  code: lambda.Code.fromAsset('./create-job-lambda-code'),
+  environment: {
+    QUEUE_URL: jobsQueue.queueUrl
+  }
+});
+```
+
+#### Author contructs
+
+A contruct creates S3 bucket and SNS topic such that writing to S3 triggers SNS event to the topic.
+
+Export both the interface and class for external use
+
+```
+// Declare props type interface, which specify S3 prefix
+export interface NotifyingBucketProps {
+  prefix?: string;
+}
+
+// this class take NotifyingBucketProps as input
+export class NotifyingBucket extends Construct {
+  // Expose the topic for external use: subscribe/unsubscribe
+  public readonly topic: sns.Topic;
+
+  constructor(scope: Construct, id: string, props: NotifyingBucketProps = {}) {
+    super(scope, id);
+    const bucket = new s3.Bucket(this, 'bucket');
+    this.topic = new sns.Topic(this, 'topic');
+    bucket.addObjectCreatedNotification(new s3notify.SnsDestination(topic),
+      { prefix: props.prefix });
+  }
+}
+
+// Use the NotifyingBucket defined above
+const queue = new sqs.Queue(this, 'NewImagesQueue');
+const imageBucket = new NotifyingBucket(this, 'ImageBucket', { prefix: 'images/' );
+imageBucket.topic.addSubscription(new sns_sub.SqsSubscription(queue));
+```
 ## References
 \[1\] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 \[2\] [Working with CDK Typscript](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html)
