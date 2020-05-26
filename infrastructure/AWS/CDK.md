@@ -192,17 +192,20 @@ cdk destroy --profile beta
 ## Concepts
 
 ### Construct
+
 Constructs are the basic building blocks of AWS CDK apps. A construct represents a "cloud component" and encapsulates everything AWS CloudFormation needs to create the component.
 
 A construct can represent a single resource, such as an Amazon Simple Storage Service (Amazon S3) bucket, or it can represent a higher-level component consisting of multiple AWS CDK resources.
 
 #### AWS Construct library
+
 AWS Construct Library contains constructs representing AWS resources. There are 3 levels of AWS constructs
 - Low level construct: CFN Resources, which include all of the AWS resources that are available in AWS CloudFormation. They are named CfnXyz, where Xyz represents the name of the resource. For example, s3.CfnBucket represents the AWS::S3::Bucket CFN Resource.
 - Middle level construct: represent AWS resources, but with a higher-level, intent-based API, which handle much of the details, boilerplate, and glue logic required by CFN constructs. For example, the s3.Bucket class represents an Amazon S3 bucket with additional properties and methods, such as bucket.addLifeCycleRule(), which adds a lifecycle rule to the bucket.
 - High level contruct: patterns. These constructs are designed to help you complete common tasks in AWS, often involving multiple kinds of resources. For example, the aws-ecs-patterns.ApplicationLoadBalancedFargateService construct represents an architecture that includes an AWS Fargate container cluster employing an Application Load Balancer (ALB)
 
 #### Composition
+
 The key pattern for defining higher-level abstractions through constructs is called composition. 
 
 A high-level construct can be composed from a number of lower-level constructs, and in turn, those could be composed from even lower-level constructs. To enable this pattern, constructs are always defined within the scope of another construct. This scoping pattern results in a hierarchy of constructs known as a construct tree. 
@@ -210,12 +213,14 @@ A high-level construct can be composed from a number of lower-level constructs, 
 In the AWS CDK, the root of the tree represents the entire AWS CDK app. Within the app, you typically define one or more stacks, which are the unit of deployment, analogous to AWS CloudFormation stacks. Within stacks, you define resources, or other constructs that eventually contain resources.
 
 #### Initialization
+
 All contructs extends cdk.Contruct base class, which takes 3 parameters:
 - Scope – The construct within which this construct is defined
 - id – An identifier that must be unique within this scope
 - Props – A set of properties or keyword arguments that define the construct's initial configuration
 
 #### Apps and Stacks
+
 CDK application (app) extends the AWS CDK class App. CDK Stacks in AWS CDK apps extend the Stack base class. Using import keyword to load dependent constructs into the module. 
 
 ```
@@ -310,21 +315,50 @@ const imageBucket = new NotifyingBucket(this, 'ImageBucket', { prefix: 'images/'
 imageBucket.topic.addSubscription(new sns_sub.SqsSubscription(queue));
 ```
 
-## Stacks
+### Stacks
 
+The unit of deployment in the AWS CDK is called a stack. All AWS resources defined within the scope of a stack, either directly or indirectly, are provisioned as a single unit.
 
+```
+import { App, Construct, Stack } from "@aws-cdk/core";
 
-## Apps
+interface EnvProps {
+  prod: boolean;
+}
+
+// imagine these stacks declare a bunch of related resources
+class ControlPlane extends Stack {}
+class DataPlane extends Stack {}
+class Monitoring extends Stack {}
+
+class MyService extends Construct {
+  constructor(scope: Construct, id: string, props?: EnvProps) {
+    super(scope, id);
+  
+    // we might use the prod argument to change how the service is configured
+    new ControlPlane(this, "cp");
+    new DataPlane(this, "data");
+    new Monitoring(this, "mon");  }
+}
+
+const app = new App();
+new MyService(app, "beta");
+new MyService(app, "prod", { prod: true });
+
+app.synth();
+```
+
+### Apps
 
 App goes through 5 phases when calling cdk deploy:
-- Construct: call CDK app code to instantiate all contructs
-- Prepare: 
+- Construct: call CDK app code to instantiate and link all contructs
+- Prepare: run contruct.prepare methods to set final states
 - Validate: validate all constructs can be deployed without problem 
-- Synthesize: caall app.synth(), and it traverses the construct tree and invokes the synthesize method on all constructs
-- Deploy
+- Synthesize: call app.synth(), and it traverses the construct tree and invokes the synthesize method on all constructs
+- Deploy: AWS CDK CLI takes the deployment artifacts cloud assembly produced by the synthesis phase and deploys it to an AWS environment.
 
 ![CDK App lifecyle](/resources/img/cdkAppLifecycle.png)
 
 ## References
-\[1\] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-\[2\] [Working with CDK Typscript](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html)
+[1] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+[2] [Working with CDK Typscript](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html)
