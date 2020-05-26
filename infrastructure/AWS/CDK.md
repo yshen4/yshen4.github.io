@@ -309,6 +309,22 @@ const queue = new sqs.Queue(this, 'NewImagesQueue');
 const imageBucket = new NotifyingBucket(this, 'ImageBucket', { prefix: 'images/' );
 imageBucket.topic.addSubscription(new sns_sub.SqsSubscription(queue));
 ```
+
+## Stacks
+
+
+
+## Apps
+
+App goes through 5 phases when calling cdk deploy:
+- Construct: call CDK app code to instantiate all contructs
+- Prepare: 
+- Validate: validate all constructs can be deployed without problem 
+- Synthesize: caall app.synth(), and it traverses the construct tree and invokes the synthesize method on all constructs
+- Deploy
+
+![CDK App lifecyle](/resources/img/cdkAppLifecycle.png)
+
 ## References
 \[1\] [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 \[2\] [Working with CDK Typscript](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html)
