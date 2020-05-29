@@ -119,6 +119,18 @@ const clone = {...combined};
 ## 4. Javascript stream APIs: filter, map, and reduce
 
 ## 5. async and wait
+Javascript is single threaded. It uses asynchronized calls to handle concurrent visits. 
+
+There are 3 versions of async design:
+- callback
+- promise
+- async/await
+
+While callback mechanism is straightforward, the code can become hard to read and maintain. The arrival of Promise solves the callback hell, but its syntax of then/catch isn't very straightforward. Async/await uses promise and bring it to the most natural style of coding.
+
+- version 1: [An implementation in callback](/src/async/callback.js) 
+- version 2: [An implementation in promise](/src/async/promise.js) 
+- version 3: [An implementation in async/await](/src/async/async.js) 
 
 ## 6. Ajax
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ajax</title>
+
+  <style>
+    .user {
+      display: flex;
+      background: lightgrey;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .user ul {
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <button id="button_load">Get users</button>
+  <div>
+    <header>
+      <h2>Github users</h2>
+    </header>
+    <section id="list_users">
+    </section>
+  <div>
+
+  <script>
+    document.getElementById('button_load').addEventListener(
+      'click',
+      loadGithubUsers);
+
+    function loadGithubUsers() {
+      xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://api.github.com/users', true);
+      //xhr.setRequestHeader('Access-Control-Allow-Origin', 'https://api.github.com/users');
+      xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+      xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type');
+      
+      /*
+       * 0: unsent, 1: openned, 2: header received, 3: loading, 4: done
+       */
+      const READY_STATE = ["UNSENT", "OPENED", "HEADERS RECIEVED", 
+                           "LOADING", "DONE"]
+      xhr.onreadystatechange = () => {
+        console.log(`State: ${READY_STATE[this.readyState]}`);
+      }
+
+      // 200: 403: 404:
+      xhr.onload = () => {
+        if (this.status === 200) {
+           const users = JSON.parse(this.responseText);
+           document.getElementById('list_users').innerHTML = users.map(
+              user => '<div class="user">' +
+                      `<img src="${user.avatar_url}" width="80" height="80">` +
+                      '<ul><li>ID: ${user.id}</li><li>Login: ${user.login}</li></ul></div>'
+              ).join('\r\n');
+        }
+      };
+
+      xhr.onerror = () => {
+        console.log(`error: ${this.status}`);
+      }
+
+      xhr.send();
+    };
+
+  </script>
+</body>
+</html>
