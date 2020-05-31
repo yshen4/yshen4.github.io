@@ -24,7 +24,18 @@ async function queryFavorites(user, pwd) {
   }
 }
 
+const queryMovies = async (user, pwd) => {
+  try {
+    const loggedUser = await loginUser(user, pwd);
+    const mappedVideos = await getFavoriteVideos(loggedUser);
+    console.table(mappedVideos);
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+}
+
 queryFavorites('yshen4', '12345');
-queryFavorites('yshen5', '12345');
+queryMovies('yshen5', '12345');
 
 console.log('Async end');
