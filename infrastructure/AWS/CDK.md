@@ -602,8 +602,105 @@ Every construct that represents a resource that can be accessed, such as an Amaz
 - grantRead
 - grantReadWrite
 
+Resources that use execution roles, such as lambda.Function, also implement IGrantable, so you can grant them access directly instead of granting access to their role.
+
+```
+bucket.grantRead(function);
+```
+
+To force the grant's permissions to be applied before another resource is created, you can add a dependency on the grant itself, as shown here. Though the return value of grant methods is commonly discarded, every grant method in fact returns an iam.Grant object.
+
+```
+const grant = bucket.grantRead(lambda);
+const custom = new CustomResource(...);
+custom.node.addDependency(grant);
+```
+
 Roles
 The IAM package contains a Role construct that represents IAM roles. The following code creates a new role, trusting the Amazon EC2 service.
+
+```
+import * as iam from '@aws-cdk/aws-iam';
+
+const role = new iam.Role(this, 'Role', {
+  assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),   // required
+});
+```
+
+Add permissions to a role by calling the role's addToPolicy method
+```
+role.addToPolicy(new iam.PolicyStatement({
+  effect: iam.Effect.DENY,
+  resources: [bucket.bucketArn, otherRole.roleArn],
+  actions: ['ec2:SomeAction', 's3:AnotherAction'],
+  conditions: {StringEquals: {
+    'ec2:AuthorizedService': 'codebuild.amazonaws.com',
+}}}));
+```
+Once the object is created, the role (whether the role passed in or the default one created by the construct) is available as the property role. This property is not available on imported resources, however, so such constructs have an addToRolePolicy 
+
+```
+// project is imported into the CDK application
+const project = codebuild.Project.fromProjectName(this, 'Project', 'ProjectName');
+
+// project is imported, so project.role is undefined, and this call has no effect
+project.addToRolePolicy(new iam.PolicyStatement({
+  effect: iam.Effect.ALLOW,   // ... and so on defining the policy
+}));
+```
+
+### Context
+
+Context values are key-value pairs that can be associated with a stack or construct.
+
+Context values are made available to your AWS CDK app in six different ways:
+- Automatically from the current AWS account.
+- Through the --context option to the cdk command.
+- In the project's cdk.context.json file.
+- In the context key of the project's cdk.json file.
+- In the context key of your ~/cdk.json file.
+- In your AWS CDK app using the construct.node.setContext method.
+
+The following are the context methods:
+- HostedZone.fromLookup: Gets the hosted zones in the account.
+- stack.availabilityZones: Gets the supported Availability Zones.
+- StringParameter.valueFromLookup: Gets a value from the current Region's Amazon EC2 Systems Manager Parameter Store.
+- Vpc.fromLookup: Gets the existing Amazon Virtual Private Clouds in your accounts.
+- LookupMachineImage: Looks up a machine image for use with a NAT instance in an Amazon Virtual Private Cloud.
+
+Don't forget to add the cdk.context.json file to your source control repository to ensure that subsequent synth commands will return the same result.
+
+Use the ```cdk context``` command to view and manage the information in cdk.context.json file.
+
+Example:
+```
+import * as cdk from '@aws-cdk/core';
+import * as ec2 from '@aws-cdk/aws-ec2';
+
+export class ExistsVpcStack extends cdk.Stack {
+
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  
+    super(scope, id, props);
+    
+    const vpcid = this.node.tryGetContext('vpcid');
+    const vpc = ec2.Vpc.fromLookup(this, 'VPC', {
+      vpcId: vpcid,
+    });
+    
+    const pubsubnets = vpc.selectSubnets({subnetType: ec2.SubnetType.PUBLIC});
+    
+    new cdk.CfnOutput(this, 'publicsubnets', {
+      value: pubsubnets.subnetIds.toString(),
+    });
+  }
+}
+```
+
+use cdk diff to see the effects of passing in a context value on the command line
+```
+cdk diff -c vpcid=vpc-0cb9c31031d0d3e22
+```
 
 ## References
 1. [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
