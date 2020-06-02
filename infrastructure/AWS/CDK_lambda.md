@@ -22,14 +22,14 @@ There are 2 files, one to attach the main stack to the app, the other to load st
 mkdir resources
 vi resources/widgets.ts
 ```
-The code can be find [widgets.ts](/lambda/resources/widgets.js).
+The code can be find [widgets.ts](lambda/resources/widgets.js).
 
 ## Add widget service
 
 ```
 npm install @aws-cdk/aws-apigateway @aws-cdk/aws-lambda @aws-cdk/aws-s3
 ```
-The code can be find [widget_service.ts](/lambda/lib/widget_service.js).
+The code can be find [widget_service.ts](lambda/lib/widget_service.js).
 
 ## Link the widget service with the app
 
