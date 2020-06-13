@@ -12,6 +12,13 @@ A list of basic concepts for ReactJS:
 - [Lifting State Up](https://reactjs.org/docs/lifting-state-up.html)
 - [Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
 - [Thinking In React](https://reactjs.org/docs/thinking-in-react.html)
+- [Context](#Context)
+- [Higher order components](#higher-order-components)
+- [Render props](#render-props)
+- [Refs](#refs)
+- [Error boundaries](#error-boundaries)
+- [HTTP requests](#http-requests)
+- [React hooks](#react-hooks)
 
 # JSX basics
 
@@ -268,3 +275,58 @@ Notes about the state:
 - State update are merged
 - Data flows down
 
+## Handling Events
+
+[Reference](https://reactjs.org/docs/handling-events.html)
+
+## Conditional Rendering
+
+[Reference](https://reactjs.org/docs/conditional-rendering.html)
+
+## Lists and Keys
+
+[Reference](https://reactjs.org/docs/lists-and-keys.html)
+
+## Forms
+
+[Reference](https://reactjs.org/docs/forms.html)
+
+## Lifting State Up
+
+[Reference](https://reactjs.org/docs/lifting-state-up.html)
+
+## Composition vs Inheritance
+
+[Reference](https://reactjs.org/docs/composition-vs-inheritance.html)
+
+## Thinking In React
+
+[Reference](https://reactjs.org/docs/thinking-in-react.html)
+
+## Context
+
+[Reference](#)
+
+## Higher order components
+
+[Reference](#)
+
+## Render props
+
+[Reference](#)
+
+## Refs
+
+[Reference](#)
+
+## Error boundaries
+
+[Reference](#)
+
+## HTTP requests
+
+[Reference](#)
+
+## React hooks
+
+[Reference](#)
