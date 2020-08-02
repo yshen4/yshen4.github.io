@@ -12,7 +12,7 @@ A list of basic concepts for ReactJS:
 - [Lifting State Up](https://reactjs.org/docs/lifting-state-up.html)
 - [Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
 - [Thinking In React](https://reactjs.org/docs/thinking-in-react.html)
-- [Context](#Context)
+- [Context](#context)
 - [Higher order components](#higher-order-components)
 - [Render props](#render-props)
 - [Refs](#refs)
@@ -24,7 +24,7 @@ A list of basic concepts for ReactJS:
 
 [Reference](https://reactjs.org/docs/introducing-jsx.html)
 
-JSX is a syntax extension to Javascript, which produces React "elements". 
+JSX is a syntax extension to Javascript, which produces React "elements". In JSX, put any valid JavaScript expression inside the curly braces in JSX. 
 
 JSX addresses the fact that rendering logic is coupled with other UI logic: event handling, state changes, and data.
 
@@ -42,6 +42,9 @@ function Greeting(user) {
 //const joe = <Greeting firstName={user_joe.firstName} lastName={user_joe.lastName} /> 
 ReactDOM.render(Greeting(user_joe), document.getElementById('root'));
 ```
+When spliting JSX over multiple lines for readability, it is recommended wrapping it in parentheses to avoid the pitfalls of automatic semicolon insertion
+
+After compilation, JSX expressions become regular JavaScript function calls and evaluate to JavaScript objects, which means that developers can use JSX inside of if statements and for loops, assign it to variables, accept it as arguments, and return it from functions.
 
 # rendering
 

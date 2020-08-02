@@ -89,3 +89,7 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 ## C#
 
 # Docker and Kubernetes
+
+# Others
+
+- [Code review guide](others/codereview.md)
