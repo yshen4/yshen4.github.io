@@ -7,6 +7,7 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 - [Cloudformation concepts](infrastructure/AWS/conceptnotes.md)
 - [CDK](infrastructure/AWS/CDK.md)
   * [Example: Lambda](infrastructure/AWS/CDK_lambda.md)
+  * [Example: context and environment](infrastructure/AWS/CDK_context.md)
 - IAM
 - EC2
 - S3
