@@ -6,6 +6,8 @@ In CDK deployment, it is important to retrieve context and environment variables
 
 Each Stack instance in an AWS CDK app is explicitly or implicitly associated with an environment (env). 
 
+
+### Set environment variables
 An environment is the target AWS account and AWS Region into which the stack is intended to be deployed.
 - Explicitly specify them in env
 - Use the specified or default AWS CLI profile, use environment variables provided by the AWS CDK CLI: CDK_DEFAULT_ACCOUNT and CDK_DEFAULT_REGION
@@ -53,4 +55,19 @@ else
     echo 1>&2 "Addiitonal args are passed through to cdk deploy."
     exit 1
 fi
+#deploy_cdk <account Id> <region> stack
 ```
+
+### Get environment variables
+Typescript and javascript get environment variables with process.env, while python uses either os.environ parameter, or os.getenv function.
+```
+
+// Sets bucket_name to undefined if environment variable not set
+const account = process.env.account;
+const region = process.env.region;
+
+// Sets bucket_name to a default if env var doesn't exist
+const account = process.env.account || "123456";
+const region = process.env.region || "us-east-1";
+
+``` 
