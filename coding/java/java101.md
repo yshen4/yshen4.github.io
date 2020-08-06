@@ -43,9 +43,7 @@ default:
 
 ```
 
-### 
-
-Reference
+### Reference
 1. [Plantir Java coding standard](https://github.com/palantir/gradle-baseline/blob/develop/docs/best-practices/java-coding-guidelines/readme.md#use-ternary-operators-sparingly)
 2. [Conditionals — If-Else vs Ternary Operator vs Switch-Case](https://medium.com/swlh/conditionals-if-else-vs-ternary-operator-vs-switch-case-b4f3ed08e1e3)
 3. [Why switch is faster than if](https://stackoverflow.com/questions/6705955/why-switch-is-faster-than-if)
