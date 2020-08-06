@@ -61,3 +61,23 @@ EnumSet        |O(1) |O(1)    |O(1)
 TreeSet        | O(logn) | O(logn) | O(logn)
 ConcurrentSkipListSet | O(logn) | O(logn) | O(logn)
 CopyOnWriteArraySet | O(n) | O(n) | O(n)
+
+When selecting set for data intensive logic, the computing complexity matters. 
+
+There are other sutle cases worthy attension:
+```
+String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
+Set<String> mySet = Arrays.stream(items).collect(Collectors.toSet());
+```
+
+Usually, Collectors.toSet() returns HashSet, therefore mySet has O(1) complexity. However from Javadoc:
+> Returns a Collector that accumulates the input elements into a new Set. 
+> There are no guarantees on the type, mutability, serializability, or thread-safety of the Set returned; 
+> if more control over the returned Set is required, use toCollection(java.util.function.Supplier).
+
+Therefore the safer bet is to change the above code to HashSet:
+```
+String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
+Set<String> mySet = Arrays.stream(items).collect(Collectors.toCollection(HashSet::new));
+```
+
