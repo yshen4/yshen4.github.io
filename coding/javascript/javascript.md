@@ -42,11 +42,11 @@ const newPerson = {
 
 newPerson.talk();
 newPerson.walk();
-  
 ```
 
 ## this
 this keyword behaves different from this in other languages like C++ or Java. this in javascript depends on where it is used. 
+
 ```javascript
 const person = {
     name: "Yue",
@@ -71,6 +71,7 @@ boundWalk();
 ```
 
 What if we use arrow function? Arrow function in javascript won't rebind this keyword. In the above case, we can refactor it:
+
 ```javascript
 const person = {
   name: "Yue",
@@ -95,6 +96,7 @@ colors = ['red', 'blue', 'green'];
 colors.map( color => `<li>${color}</li>`);
 //Output: ["<li>red</li>", "<li>blue</li>", "<li>green</li>"]
 ```
+
 ## Destructing
 
 ```
@@ -156,8 +158,10 @@ dino.teach();
 ```
 
 ## spread operator
+Spread operator can apply to both lists and objects.
 
 ### spread on array
+
 ```
 const first = [1, 2, 3];
 const second = [4, 5, 6];
@@ -171,6 +175,7 @@ first.concat(second);
 // clone with spread
 const clone = [...first];
 ```
+
 ### spread on object
 ```
 const namePart = { name: "Yue"};
@@ -189,6 +194,7 @@ Usually an object in a module isn't visible outside. To make it public, use expo
 export public function or objects
 - default export if only one exported object: export default <object>
 - named export if multiple exported object: export <object>
+
 ```
 //module 1: Person.js
 export class Person() {}
