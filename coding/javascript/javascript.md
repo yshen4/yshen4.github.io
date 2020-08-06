@@ -192,8 +192,12 @@ A js file is a module, which can be imported in other modules.
 
 Usually an object in a module isn't visible outside. To make it public, use export key words:
 export public function or objects
-- default export if only one exported object: export default <object>
-- named export if multiple exported object: export <object>
+- default export if only one exported object: ```export default <object>```
+- named export if multiple exported object: ```export <object>```
+
+import function, classes, or objects
+- For named exports, need {}: ```import { <object> } from <module>``` 
+- For default export, no need for {}: ```import <object> from <module>```
 
 ```
 //module 1: Person.js
@@ -211,7 +215,3 @@ const dino = new Teacher("Dino", 3);
 dino.walk();
 dino.teach();
 ```
-
-import function, classes, or objects
-- For named exports, need {}: import { <object> } from <module> 
-- For default export, no need for {}: import <object> from <module>
