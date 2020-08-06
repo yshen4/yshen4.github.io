@@ -79,6 +79,11 @@ Reference: [MIT open course on Youtube ](https://www.youtube.com/playlist?list=P
 My work started with C/C++, then moved to .net framework and C# (certifed Microsoft C# developer). Thereafter, I came back to C/C++ and Linux development. I used a lot of python to automate C/C++ programs. Most recently, I used Java and ReactJS for full stack development.
 
 ## C/C++
+
+### Reference
+1. [The definitive C++ book guide](https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list)
+2. [C++ tutorial](https://github.com/changkun/modern-cpp-tutorial) 
+
 ## Java
 ## Python
 ## Javascript/React
