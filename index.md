@@ -85,6 +85,7 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 2. [C++ tutorial](https://github.com/changkun/modern-cpp-tutorial) 
 
 ## Java
+1. [Java 101](coding/java/java101.md)
 
 ### Reference
 1. [Effective java]()
