@@ -85,7 +85,18 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 2. [C++ tutorial](https://github.com/changkun/modern-cpp-tutorial) 
 
 ## Java
+
+### Reference
+1. [Effective java]()
+2. [Java Concurrency in Practice](http://www.amazon.com/dp/0321349601/?tag=javamysqlanta-20)
+3. [Java Performance](https://www.amazon.com/Java-Performance-Charlie-Hunt/dp/0137142528)
+4. [Java performance tutorial](http://tutorials.jenkov.com/java-performance/index.html)
+
 ## Python
+
+### Reference
+1. [Fluent python](https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1492056359)
+
 ## Javascript/React
 - [Javascript concepts](coding/javascript/javascript.md)
 - [Javascript FAQ](coding/javascript/jsfaq.md)
