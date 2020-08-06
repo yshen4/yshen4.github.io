@@ -85,3 +85,36 @@ String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
 Set<String> mySet = Arrays.stream(items).collect(Collectors.toCollection(HashSet::new));
 ```
 
+## String.equals complexity
+
+Unlike C/C++ development, many use String.equals without thinking about its complexity. It is fine for normal applications, for data intensive applications, it can cause latency hard to identify. 
+
+OpenJDK has the following [implementation](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java)
+```
+public boolean equals(Object anObject) {
+    if (this == anObject) {
+         return true;
+    }
+    if (anObject instanceof String) {
+        String anotherString = (String) anObject;
+        int n = value.length;
+        if (n == anotherString.value.length) {
+            char v1[] = value;
+            char v2[] = anotherString.value;
+            int i = 0;
+            while (n-- != 0) {
+                if (v1[i] != v2[i])
+                     return false;
+                i++;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+From the implementation, the complexity is O(n) except:
+- the strings are the same object; or
+- the object checking is not a string; or
+- the string lengths are different.
