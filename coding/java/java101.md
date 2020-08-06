@@ -53,6 +53,9 @@ default:
 
 ## Set complexity
 
+- Problem: do Java Set operators have O(1) complexity? 
+
+- Analysis:
 Set provides interface for a collection of unique elements. Java provides 6 implmentations of Set: HashSet, LinkedHashSet, EnumSet, TreeSet, CopyOnWriteArraySet, and ConcurrentSkipListSet.
 
 Implementation | add | remove | contains
@@ -78,7 +81,9 @@ Usually, Collectors.toSet() returns HashSet, therefore mySet has O(1) complexity
 > There are no guarantees on the type, mutability, serializability, or thread-safety of the Set returned; 
 > if more control over the returned Set is required, use toCollection(java.util.function.Supplier).
 
-Therefore the safer bet is to change the above code to HashSet:
+- Solution: explicitly choose Set implementation
+
+The safer bet is to change the above code to HashSet:
 
 ```
 String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
@@ -87,8 +92,10 @@ Set<String> mySet = Arrays.stream(items).collect(Collectors.toCollection(HashSet
 
 ## String.equals complexity
 
-Unlike C/C++ development, many use String.equals without thinking about its complexity. It is fine for normal applications, for data intensive applications, it can cause latency hard to identify. 
+- Problem: is String.equals complexity O(1) or O(n)?
+Unlike C/C++ development, many Java developers use String.equals without thinking about its complexity. It is fine for normal applications, for data intensive applications, it can cause latency hard to identify. 
 
+- Analysis:
 OpenJDK has the following [implementation](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java)
 ```
 public boolean equals(Object anObject) {
@@ -114,7 +121,10 @@ public boolean equals(Object anObject) {
 }
 ```
 
-From the implementation, the complexity is O(n) except:
+From the implementation, the complexity is O(n) except the following, in which the complexity is O(1):
 - the strings are the same object; or
 - the object checking is not a string; or
 - the string lengths are different.
+
+- Solution:
+Customize class comparison functions to optimize the performance.
