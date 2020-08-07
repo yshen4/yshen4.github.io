@@ -90,6 +90,25 @@ String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
 Set<String> mySet = Arrays.stream(items).collect(Collectors.toCollection(HashSet::new));
 ```
 
+### How is HashSet implemented?
+
+HashSet is implemented with HashMap, in which add calls HashMap.put function, remove calls HashMap.remove function, and contains calls HashMap.containsKey function. In HashMap, put function calls key's hashCode() function. However, when the map has the key hashcode, it will call key's equals function to check if those 2 are equal. In the case of conflict, the data is saved in a linked list, in that case the complexity becomes O(n). For more details, refer to [1].
+
+Here are a summary of hashCode() for common Java data types:
+Data Type | Hashcode
+--------- | --------
+Integer   | value
+Boolean   | value ? 1231 : 1237
+Long      | (int)(value ^ (value >>> 32))
+Float     | floatToRawIntBits
+Double    | long bits = doubleToLongBits(value); (int)(bits ^ (bits >>> 32))
+String    | h = 31 * h + val[i] for i from 0 to string length
+
+### Reference
+1. [OpenJDK hashmap implemention](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/HashMap.java)
+2. [OpenJDK String](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java)
+
+
 ## String.equals complexity
 
 - Problem: is String.equals complexity O(1) or O(n)?

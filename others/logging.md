@@ -23,6 +23,12 @@ Logging is for human analysis, therefore we should consider logging the followin
 4. Put semantic context in the log;
 5. Log the source: file, class, function.
 
+Logging can cause security issues too, therefore we should not log sensitive information:
+1. User information
+2. Financial information
+3. Health related information
+4. Credentials
+
 ### How to log?
 
 As is all distributed services, we design logging for failures:
