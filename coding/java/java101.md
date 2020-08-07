@@ -142,9 +142,9 @@ public boolean equals(Object anObject) {
 ```
 
 From the implementation, the complexity is O(n) except the following, in which the complexity is O(1):
-- the strings are the same object; or
-- the object checking is not a string; or
-- the string lengths are different.
+1. the strings are the same object; or
+2. the object checking is not a string; or
+3. the string lengths are different.
 
 - Solution:
 Customize class comparison functions to optimize the performance.
