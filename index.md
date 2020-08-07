@@ -110,4 +110,5 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 
 # Others
 
-- [Code review guide](others/codereview.md)
+1. [Code review guide](others/codereview.md)
+2. [Loggig guide](others/logging.md)
