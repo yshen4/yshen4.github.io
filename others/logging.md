@@ -17,17 +17,20 @@ In the document, we will summarize logging for data intensive applications deplo
 ### What information to log?
 
 Logging is for human analysis, therefore we should consider logging the following information in humanly readable text:
-1. timestamp
+1. Timestamp
 2. Identification id for the request, session, service, etc;
-3. Log in text format, and make it developer friendly;
-4. Put semantic context in the log;
-5. Log the source: file, class, function.
+3. Log in text format;
+4. Make it developer friendly, and machine parseable;
+5. Put semantic context in the log;
+6. Log the source: file, class, function.
 
 Logging can cause security issues too, therefore we should not log sensitive information:
 1. User information
 2. Financial information
 3. Health related information
 4. Credentials
+
+In the end, we need to learn and adjust based on the service usage. It also takes time for teams to learn what is the appropriate amount of logging.
 
 ### How to log?
 
@@ -37,7 +40,7 @@ As is all distributed services, we design logging for failures:
 3. Collect events from everything, everywhere;
 4. Log at the right level.
 
-### How to categorize the information?
+### How to log at the right level?
 
 For logging at the right level, it is easier to said than done. Here we try to provide a guide to categorize information in different levels defined in Log4j.
 
@@ -50,12 +53,21 @@ WARN   | Designate potentially harmful situations. Log at this level all events 
 ERROR  | Designates error events that might still allow the application to continue running. Log every error condition at this level. That can be API calls that return errors or internal error conditions.
 FATAL  | Designate severe error events that will lead the service down. Too bad, it’s doomsday. Use this very scarcely, this shouldn’t happen a lot in a real program. Usually logging at this level signifies the end of the program. For instance, if a network daemon can’t bind a network socket, log at this level and exit is the only sensible thing to do.
 
+Logging at the right level may also depend on which stage is the deployment:
+Stage | Log level
+----- | ---------
+Desktop | DEBUG
+Alpha | DEBUG
+Beta  | DEBUG
+Gamma | INFO
+Prod  | INFO
+
 ## Good and bad examples
 
 Usually we don't make mistakes when errors need to be logged. The tricky ones are always with debug and info, sometimes warning. This also varies from one application to another. Logging every event with INFO may be OK for control plane service, it is too excessive for data intensive applications.
 
 1. Excessive development information is logged at INFO level for each event write 
-```
+```java
 override fun process(key: String, timestampedData: TimestampedData<String>) {
     val value = timestampedData.data
     try {
@@ -80,7 +92,7 @@ override fun process(key: String, timestampedData: TimestampedData<String>) {
 
 It isn't an error, but may need some investigation.
 
-```
+```java
 val wallClockTime = clock.millis()
 if (checkpointTimestampMillis < wallClockTime) {
     // It shows warning sign if the checkpoint is in the past, which is worthy investigation 
