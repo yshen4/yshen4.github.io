@@ -16,6 +16,12 @@ In the document, we will summarize logging for data intensive applications deplo
 ## General concepts
 ### What information to log?
 
+Logging is used for different purposes, therefore we need to keep in mind all of those:
+- Trouble shooting
+- Auditing
+- Profiling
+- Statistics
+
 Logging is for human analysis, therefore we should consider logging the following information in humanly readable text:
 1. Timestamp
 2. Identification id for the request, session, service, etc;
@@ -54,6 +60,7 @@ ERROR  | Designates error events that might still allow the application to conti
 FATAL  | Designate severe error events that will lead the service down. Too bad, it’s doomsday. Use this very scarcely, this shouldn’t happen a lot in a real program. Usually logging at this level signifies the end of the program. For instance, if a network daemon can’t bind a network socket, log at this level and exit is the only sensible thing to do.
 
 Logging at the right level may also depend on which stage is the deployment:
+
 Stage | Log level
 ----- | ---------
 Desktop | DEBUG
@@ -67,7 +74,7 @@ Prod  | INFO
 Usually we don't make mistakes when errors need to be logged. The tricky ones are always with debug and info, sometimes warning. This also varies from one application to another. Logging every event with INFO may be OK for control plane service, it is too excessive for data intensive applications.
 
 1. Excessive development information is logged at INFO level for each event write 
-```java
+```kotlin
 override fun process(key: String, timestampedData: TimestampedData<String>) {
     val value = timestampedData.data
     try {
@@ -92,7 +99,7 @@ override fun process(key: String, timestampedData: TimestampedData<String>) {
 
 It isn't an error, but may need some investigation.
 
-```java
+```kotlin
 val wallClockTime = clock.millis()
 if (checkpointTimestampMillis < wallClockTime) {
     // It shows warning sign if the checkpoint is in the past, which is worthy investigation 
