@@ -148,3 +148,62 @@ From the implementation, the complexity is O(n) except the following, in which t
 
 - Solution:
 Customize class comparison functions to optimize the performance.
+
+## Double checked locking is broken
+
+For lazy initialization in a multithreaded environment, double-Checked Locking is widely cited and used as an efficient method.
+
+Unfortunately, it did not work reliably in a platform independent way in Java without additional synchronization. C++ depends on the memory model of the processor, the reorderings performed by the compiler, and the interaction between the compiler and the synchronization library. Explicit memory barriers can be used to make it work in C++, but these barriers are not available in Java.
+
+### Why doesn't it work?
+
+Let's use Log as an example:
+```
+public class Foo {
+  private Logger logger = null;
+  protected Logger getLog() {
+    if (logger == null) {
+      synchronized (this) {
+        if (logger == null) logger = LoggerFactory.getLogger(getClass());
+      }
+    }
+    return logger;
+  }
+}
+```
+
+When we build it, will get the following error:
+> This method may contain an instance of double-checked locking.
+> This idiom is not correct according to the semantics of the Java memory model.
+
+There are many reasons this doesn't work. 
+
+The most obvious reason it doesn't work is that the writes that initialize the Helper object and the write to the helper field can be done out of order. Thus, a thread which invokes getLog() could see a non-null reference to a logger object, but see the default values for fields of the logger object, rather than the values set in the function.
+
+### How to fix it?
+
+There are several ways to fix the problem in Java.
+1. Use static singleton
+2. Use Guice singleton
+3. Use volatile keyword
+
+In this document, we focus on option 3. In the new Java memory model(> Java 5), the system will not allow a write of a volatile to be reordered with respect to any previous read or write, and a read of a volatile cannot be reordered with respect to any following read or write
+
+```
+public class Foo {
+  private volatile Logger logger = null;
+  protected Logger getLog() {
+    if (logger == null) { 
+      synchronized (this) { 
+        if (logger == null) logger = LoggerFactory.getLogger(getClass());
+      }
+    }
+    return logger;
+  }
+}
+```
+
+### Reference
+1. [The "Double-Checked Locking is Broken" Declaration](http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html) 
+2. [more detailed description of compiler-based reorderings](http://gee.cs.oswego.edu/dl/cpj/jmm.html)
+3. [A new Java Memory Model and Thread specification](http://www.cs.umd.edu/~pugh/java/memoryModel)
