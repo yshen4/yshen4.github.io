@@ -13,7 +13,7 @@ The ternary operator is a substitute for an if-else statement, in which the tern
 However, we can nest ternary operators like if-else statements, which is overly used and becomes unreadable and difficult to understand.
 
 Here is an example with nested ternary operators:
-```
+```java
 int i = 5;
 String result = i == 0 ? "a" : i == 1 ? "b" : i == 2 ? "c" : i == 3 ? "d" : "e";
 ```
@@ -27,7 +27,7 @@ What's more, switch (TableSwitch or LookupSwitch) are faster than if/else if the
 - Solution: prefer switch/case
 
 Refactor with switch/case
-```
+```java
 int i = 5;
 
 String result = null;
@@ -71,7 +71,7 @@ When selecting set for data intensive logic, the computing complexity matters.
 
 There are other sutle cases worthy attension:
 
-```
+```java
 String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
 Set<String> mySet = Arrays.stream(items).collect(Collectors.toSet());
 ```
@@ -85,7 +85,7 @@ Usually, Collectors.toSet() returns HashSet, therefore mySet has O(1) complexity
 
 The safer bet is to change the above code to HashSet:
 
-```
+```java
 String[] items = new String[]{"One", "Two", "Three", "Four", "Five"};
 Set<String> mySet = Arrays.stream(items).collect(Collectors.toCollection(HashSet::new));
 ```
@@ -117,7 +117,7 @@ Unlike C/C++ development, many Java developers use String.equals without thinkin
 
 - Analysis:
 OpenJDK has the following [implementation](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java)
-```
+```java
 public boolean equals(Object anObject) {
     if (this == anObject) {
          return true;
@@ -158,7 +158,7 @@ Unfortunately, it did not work reliably in a platform independent way in Java wi
 ### Why doesn't it work?
 
 Let's use Log as an example:
-```
+```java
 public class Foo {
   private Logger logger = null;
   protected Logger getLog() {
@@ -189,7 +189,7 @@ There are several ways to fix the problem in Java.
 
 In this document, we focus on option 3. In the new Java memory model(> Java 5), the system will not allow a write of a volatile to be reordered with respect to any previous read or write, and a read of a volatile cannot be reordered with respect to any following read or write
 
-```
+```java
 public class Foo {
   private volatile Logger logger = null;
   protected Logger getLog() {
