@@ -6,13 +6,15 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 ## Cloud computing with AWS
 - [Cloudformation concepts](infrastructure/AWS/conceptnotes.md)
 - [CDK](infrastructure/AWS/CDK.md)
-  * [Example: Lambda](infrastructure/AWS/CDK_lambda.md)
-  * [Example: context and environment](infrastructure/AWS/CDK_context.md)
+  * [Context and environment](infrastructure/AWS/CDK_context.md)
+  * [Lambda](infrastructure/AWS/CDK_lambda.md)
+  * SNS and SQS
+  * S3
+  * DynamoDB
+  * RDB
+  * EC2
 - IAM
-- EC2
-- S3
-- DynamoDB
-- RDB
+- Network
 
 ## Cassandra
 - Deploy Cassandra on AWS
@@ -25,8 +27,9 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 - Performance tunning
 
 ## Redis
-- Deploy Elasticsearch on AWS
+- Deploy Redis on AWS
 - Rate limiter with Redis
+- Message recall with Redis
 
 ## ZooKeeper
 - Deploy ZooKeeper on AWS
@@ -41,7 +44,7 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 - Integrate Druide with Kafka Streaming
 
 # Algorithms in C++
-In the work, I have used several data structures and algorithms to improve computing performance and reduce glitches.
+I have met many developers in the field, and have used both C++ and Java extensively in the career. One thing separates C/C++ developers from Java progammers is C/C++ developers always ask why and how the algorithms work, while Java programmers assume the libraries take care of the efficiency issues. Sometimes I become the outlier because I always ask the obvious questions. In the work, I have used several data structures and algorithms to improve computing performance and reduce glitches.
 
 ## Data structure
 - Array
@@ -79,6 +82,7 @@ Reference: [MIT open course on Youtube ](https://www.youtube.com/playlist?list=P
 My work started with C/C++, then moved to .net framework and C# (certifed Microsoft C# developer). Thereafter, I came back to C/C++ and Linux development. I used a lot of python to automate C/C++ programs. Most recently, I used Java and ReactJS for full stack development.
 
 ## C/C++
+- [Modern C++ basics](coding/cpp/basics.md)
 
 ### Reference
 1. [The definitive C++ book guide](https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list)
