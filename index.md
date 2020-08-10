@@ -112,6 +112,10 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 
 # Docker and Kubernetes
 
+# Machine Learning
+
+- [Machine learning basics](ml/basics.md)
+
 # Others
 
 1. [Code review guide](others/codereview.md)
