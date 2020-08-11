@@ -10,7 +10,7 @@ I build software solutions to be deployed in cloud. In past, I have used many te
   * [Lambda](infrastructure/AWS/CDK_lambda.md)
   * SNS and SQS
   * S3
-  * DynamoDB
+  * [DynamoDB](infrastructure/AWS/CDK_dynamodb.md)
   * RDB
   * EC2
 - IAM

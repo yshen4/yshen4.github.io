@@ -66,5 +66,3 @@ curl -X GET 'https://GUID.execute-api-REGION.amazonaws.com/prod/example'
 curl -X DELETE 'https://GUID.execute-api-REGION.amazonaws.com/prod/example'
 curl -X GET 'https://GUID.execute-api-REGION.amazonaws.com/prod'
 ```
-
-
