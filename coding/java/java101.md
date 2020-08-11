@@ -203,6 +203,39 @@ public class Foo {
 }
 ```
 
+## Why can't we use String.hashCode to obfuscate Id?
+
+- Problem
+
+Hash codes can be thought of as pseudo-random numbers. Hashes are not unique, hence they are not apropriate for uniqueId, see [Birthday problem](https://en.wikipedia.org/wiki/Birthday_problem#Probability_table). The problem coming from hash code conflict is very hard to debug because it happens scarcely so hard to replicate. 
+
+```java
+String[] data = {"wws8vw", "wws8x9", "wmxy0", "wmxwn"};
+Arrays.stream(data).forEach( one -> System.out.println(one + ": " + one.hashCode()) );
+```
+The output is: 
+```
+wws8vw: -774715770
+wws8x9: -774715770
+wmxy0: 113265337
+wmxwn: 113265337
+```
+
+- Solution
+
+A thorough solution to solve this problem is beyong a coding best practice. We may need to consider the use cases when evaluate any candidate. For example:
+- Is it required to be unreversible?
+- Does it have mechanism to detect conflicts?
+- Can we use SHA1 or hashing methods with much less conflict probability?
+
+Suggestions:
+1. XOR
+2. shuffle individual bits
+3. convert to modular representation (D.Knuth, Vol. 2, Chapter 4.3.2)
+4. choose 32 (or 64) overlapping subsets of bits and XOR bits in each subset (parity bits of subsets)
+5. represent it in variable-length numberic system and shuffle digits
+6. choose a pair of odd integers x and y that are multiplicative inverses of each other (modulo 232), then multiply by x to obfuscate and multiply by y to restore, all multiplications are modulo 232 (source: ["A practical use of multiplicative inverses" by Eric Lippert](http://ericlippert.com/2013/11/14/a-practical-use-of-multiplicative-inverses/))
+
 ### Reference
 1. [The "Double-Checked Locking is Broken" Declaration](http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html) 
 2. [more detailed description of compiler-based reorderings](http://gee.cs.oswego.edu/dl/cpj/jmm.html)
