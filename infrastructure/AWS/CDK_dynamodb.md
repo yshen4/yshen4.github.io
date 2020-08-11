@@ -10,7 +10,7 @@ This example is composed of 3 parts:
 ## DynamoDB Data Access
 
 Here is an overview of DynamoDB APIs:
-![DynamoDB API](resources/img/DynamoDB.SDKInterfaces.png)
+![DynamoDB API](/resources/img/DynamoDB.SDKInterfaces.png)
 
 
 ## Integration with AWS Lambda
