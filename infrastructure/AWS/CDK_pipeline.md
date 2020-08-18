@@ -32,4 +32,4 @@ A transition is the point where a pipeline execution moves to the next stage in 
 
 Artifacts refers to the collection of data, such as application source code, built applications, dependencies, definitions files, templates, and so on, that is worked on by pipeline actions. Artifacts are produced by some actions and consumed by others.
 
-![Code pipeline workflow](resources/img/cdkPipelineFlow.png)
+![Code pipeline workflow](/resources/img/cdkPipelineFlow.png)
