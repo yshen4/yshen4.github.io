@@ -15,6 +15,8 @@ I build software solutions to be deployed in cloud. In past, I have used many te
   * EC2
 - IAM
 - Network
+- CI/CD
+  * [Code pipeline](infrastructure/AWS/CDK_pipeline.md)
 
 ## Cassandra
 - Deploy Cassandra on AWS
