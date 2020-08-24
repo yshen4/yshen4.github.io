@@ -100,6 +100,7 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 4. [Java performance tutorial](http://tutorials.jenkov.com/java-performance/index.html)
 
 ## Python
+1. [Flask 101](coding/python/flask101.md)
 
 ### Reference
 1. [Fluent python](https://www.amazon.com/Fluent-Python-Concise-Effective-Programming/dp/1492056359)
