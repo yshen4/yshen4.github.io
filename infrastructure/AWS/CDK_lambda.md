@@ -29,7 +29,10 @@ The code can be find [widgets.ts](lambda/resources/widgets.js).
 ```
 npm install @aws-cdk/aws-apigateway @aws-cdk/aws-lambda @aws-cdk/aws-s3
 ```
-The code can be find [widget_service.ts](lambda/lib/widget_service.js).
+The code can be find [widget_service.ts](lambda/lib/widget_service.ts).
+
+More details on different options to set code path:
+- https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-lambda.Code.html
 
 ## Link the widget service with the app
 
