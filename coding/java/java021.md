@@ -56,7 +56,7 @@ Solution:
 <details>
   <Summary>Click to show code</summary>
 
-```
+```java
 class ArrayUtils {
   public static boolean scoresIncreasing(final List<int> data) {
     for(int i = 1; i < data.size(); ++i) {
@@ -70,6 +70,7 @@ class ArrayUtils {
   }
 }
 ```
+
 </details>
 
 ### Score the same
