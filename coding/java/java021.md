@@ -2,11 +2,17 @@
 
 This document is to help AP Computer science students practice and improve coding skills.
 
-## 
-
 ## Data types
 
 ### Primitive types
+
+Java supports several primitive data types: byte (8 bits), short (16 bits), int (32 bits), long (64 bits), char (16 bits unicode), float (32 bits), double (64 bits), boolean (size isn't defined), 
+
+Although String isn't primitive data type, it is supported as just like primitive.
+
+Variables of primitive data types need to be initialized:
+- class fields variables will be initialized to default values if not initialized;
+- local variables have to be initialized before use, otherwise, it will throw compiler error. 
 
 #### Check a number is odd, even, primary etc
 
@@ -16,11 +22,11 @@ Write a math class, which provide 3 static functions:
 - isPrimary(integer a);
 
 Test:
+
 ```
 Math.isOdd(5): true
 Math.isEven(0): true
 Math.isPrimary(2): true
-
 ```
 
 ### String types
@@ -38,17 +44,40 @@ Math.isPrimary(2): true
 Given an array of scores, return true if each score is equal or greater than the one before. The array will be length 2 or more.
 
 Test:
+
 ```
 scoresIncreasing([1, 3, 4]) → true
 scoresIncreasing([1, 3, 2]) → false
 scoresIncreasing([1, 1, 4]) → true
 ```
 
+Solution:
+
+<details>
+  <Summary>Click to show code</summary>
+
+```
+class ArrayUtils {
+  public static boolean scoresIncreasing(final List<int> data) {
+    for(int i = 1; i < data.size(); ++i) {
+      if (data[i] < data[i-1]) return false;
+    }
+    return true;
+  }
+
+  public static void main(String[] args) {
+    System.out.printf("scoresIncreasing([%s]) -> %b", data, scoresIncreasing(data));
+  }
+}
+```
+</details>
+
 ### Score the same
 
 Given an array of scores, return true if there are scores of X more than once in the array. 
 
 Test:
+
 ```
 scoresSame(null) → false
 scoresSame([]) → false
