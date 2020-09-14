@@ -58,6 +58,8 @@ Solution:
   Click to show code
 </summary>
 
+<p>
+
 ```java
 class ArrayUtils {
   public static boolean scoresIncreasing(final List<int> data) {
@@ -72,6 +74,7 @@ class ArrayUtils {
   }
 }
 ```
+</p>
 </details>
 
 ### Score the same
