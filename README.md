@@ -4,13 +4,27 @@ You can use the [editor on GitHub](https://github.com/yshen4/yshen4.github.io/ed
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-<details><summary>CLICK ME</summary>
+Solutions:
+<details>
+<summary markdown='span'>
+  Click to show code
+</summary>
+
 <p>
 
-#### yes, even hidden code blocks!
+```java
+class ArrayUtils {
+  public static boolean scoresIncreasing(final List<int> data) {
+    for(int i = 1; i < data.size(); ++i) {
+      if (data[i] < data[i-1]) return false;
+    }
+    return true;
+  }
 
-```python
-print("hello world!")
+  public static void main(String[] args) {
+    System.out.printf("scoresIncreasing([%s]) -> %b", data, scoresIncreasing(data));
+  }
+}
 ```
 
 </p>
