@@ -51,8 +51,21 @@ scoresIncreasing([1, 3, 2]) → false
 scoresIncreasing([1, 1, 4]) → true
 ```
 
-Solution:
+Example:
 
+<details><summary>CLICK ME</summary>
+<p>
+
+#### yes, even hidden code blocks!
+
+```python
+print("hello world!")
+```
+
+</p>
+</details>
+
+Solution:
 <details>
 <summary markdown='span'>
   Click to show code
@@ -74,6 +87,7 @@ class ArrayUtils {
   }
 }
 ```
+
 </p>
 </details>
 
