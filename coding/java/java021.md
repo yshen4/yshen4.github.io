@@ -53,8 +53,7 @@ scoresIncreasing([1, 1, 4]) → true
 
 Solution:
 
-<details>
-  <Summary>Click to show code</summary>
+<details><summary>Click to show code</summary>
 
 ```java
 class ArrayUtils {
