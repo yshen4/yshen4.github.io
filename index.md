@@ -13,6 +13,7 @@ I build software solutions to be deployed in cloud. In past, I have used many te
   * [DynamoDB](infrastructure/AWS/CDK_dynamodb.md)
   * RDB
   * EC2
+  * [CloudWatch](infrastructure/AWS/CDK_cloudwatch.md)
 - IAM
 - Network
 - CI/CD
