@@ -5,6 +5,7 @@
 2. Define cloudwatch alarms
 3. Define cloudwatch carnaval monitor
 4. Construct alarms in the app
+5. Define dashboard with metrics
 
 ## Define cloudwatch metrics
 
@@ -81,8 +82,47 @@ const monitor = new CarnavalMonitor(this, `Sev3-CarnavalMonitor-DLQ`, {
 
 ## Deploy the monitor along with alarms
 
+## Define dashboard with metrics
 
+In addition to alarms, we can define dashboard to visualize the system operation and monitoring.
+
+First of all, need to import cloudwatch package:
+
+```javascript
+import {Dashboard, GraphWidget, TextWidget} from "@aws-cdk/aws-cloudwatch";
+import {Construct} from "@aws-cdk/core";
+```
+
+Secondly, create widgets.
+
+```
+const widgetTitle = new TextWidget({
+      markdown: "MyWidget",
+      width: 24,
+      height: 1
+    });
+
+const widgetInstance = new GraphWidget({
+    title: title,
+    width: 8,
+    height: 6, 
+    left: [dlqMessageCountMetric],
+    right: [...],
+    stacked: false
+  });
+```
+
+Define Dashboard instance and add widgets by addWidgets or in the constructor:
+
+```javascript
+const dashboard =  new Dashboard(scope, `MyDashboard`, {
+  dashboardName: `MyDashboard`, //name, must be unique in the account
+  start: '-P3H', //Start time
+  widgets: [[widgetTitle], [widgetInstance]]
+});
+```
 
 ## Reference
 1. https://docs.aws.amazon.com/cdk/latest/guide/how_to_set_cw_alarm.html
 2. https://docs.aws.amazon.com/cdk/api/latest/docs/aws-cloudwatch-readme.html 
+3. https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-cloudwatch.Dashboard.html
