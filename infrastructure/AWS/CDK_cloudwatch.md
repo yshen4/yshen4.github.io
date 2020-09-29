@@ -126,3 +126,4 @@ const dashboard =  new Dashboard(scope, `MyDashboard`, {
 1. https://docs.aws.amazon.com/cdk/latest/guide/how_to_set_cw_alarm.html
 2. https://docs.aws.amazon.com/cdk/api/latest/docs/aws-cloudwatch-readme.html 
 3. https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-cloudwatch.Dashboard.html
+4. https://docs.aws.amazon.com/cloudwatch/index.html

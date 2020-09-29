@@ -94,6 +94,7 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 ## Java
 1. [Java 101](coding/java/java101.md)
 2. [Java 0 to 1](coding/java/java021.md)
+3. [AOP with Java](coding/java/aop101.md)
 
 ### Reference
 1. [Effective java]()
