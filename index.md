@@ -8,7 +8,7 @@ I build software solutions to be deployed in cloud. In past, I have used many te
 - [CDK](infrastructure/AWS/CDK.md)
   * [Context and environment](infrastructure/AWS/CDK_context.md)
   * [Lambda](infrastructure/AWS/CDK_lambda.md)
-  * SNS and SQS
+  * [SNS and SQS](infrastructure/AWS/CDK_sqs.md)
   * S3
   * [DynamoDB](infrastructure/AWS/CDK_dynamodb.md)
   * RDB
