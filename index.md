@@ -3,6 +3,11 @@
 
 I build software solutions to be deployed in cloud. In past, I have used many technologies in infrastructure, storage, search, cache, and streaming.
 
+- [AWS](AWS.md)
+- [Algorithms](algorithms.md)
+- [Coding](coding.md)
+- [Frameworks](framework.md)
+
 ## Cloud computing with AWS
 - [Cloudformation concepts](infrastructure/AWS/conceptnotes.md)
 - [CDK](infrastructure/AWS/CDK.md)

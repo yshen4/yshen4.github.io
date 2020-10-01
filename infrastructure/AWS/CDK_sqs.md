@@ -1,6 +1,8 @@
 # SQS
 
-## 
+## Provisioning SQS with CDK
+
+## SQS developer's guide
 
 ## Error handling and DLQ
 
@@ -13,7 +15,7 @@ For better handling of partial faiures, 2 options are available:
 Lambda auto-scales the number of pollers based on traffic. This is great until the SQS function uses up too much of the available concurrent executions in the region. When the regional concurrency limit is breached, any Lambda invocations can be throttled.
 
 ## Reference
-1. https://lumigo.io/blog/sqs-and-lambda-the-missing-guide-on-failure-modes/
+1. [SQS and Lambda on failure](https://lumigo.io/blog/sqs-and-lambda-the-missing-guide-on-failure-modes/)
 2. [Best Practices for Serverless Queue Processing](https://youtu.be/SDAXRKwTQIk)
 3. [Hitchhiker’s Guide to AWS Step Functions](https://epsagon.com/development/hitchhikers-guide-to-aws-step-functions/)
 4. 
