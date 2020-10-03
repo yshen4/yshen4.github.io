@@ -215,3 +215,89 @@ const dino = new Teacher("Dino", 3);
 dino.walk();
 dino.teach();
 ```
+
+## value type vs reference type
+
+Javascript has 5 primitive data types, which are passed by value: Boolean, null, undefined, String, and Number.
+
+Javascript has 3 data types that are passed by reference: Array, Function, and Object, basically all object. Variables that are assigned a non-primitive value are given a reference to that value. That reference points to the object’s location in memory. The variables don’t actually contain the value. 
+
+When a reference type value is copied to another variable using =, the address of that value is actually copied over as if it were a primitive. Objects are copied by reference instead of by value.
+
+### Memory model for value and reference types
+
+Example for primitive data
+```
+let val = 1;
+let copy = val;
+console.log(val, copy);
+
+val = 2;
+console.log(val, copy);
+```
+Before the val = 2:
+| variable  | value  |
+|-----------|--------|
+| val       | 1      |
+| cop       | 1      |
+
+After the val = 2:
+| variable  | value  |
+|-----------|--------|
+| val       | 2      |
+| cop       | 1      |
+
+Example for referenc data
+```
+let ref = [1, 2, 3];
+let ref_copy = ref;
+console.table(ref);
+console.table(ref_copy);
+
+ref.push(4);
+console.table(ref);
+console.table(ref_copy);
+
+ref = {name: "yue", work: 'engineer'};
+console.table(ref);
+console.table(ref_copy);
+```
+
+Before push(4):
+| variable  | value  | Address  | Object |
+|-----------|--------|----------|--------|
+| ref       | <#001> | #001     | 1,2,3  |
+| ref_copy  | <#001> |          |        |
+
+After push(4):
+| variable  | value  | Address  | Object |
+|-----------|--------|----------|--------|
+| ref       | <#001> | #001     | 1,2,3,4|
+| ref_copy  | <#001> |          |        |
+
+After reassign ref:
+| variable  | value  | Address  | Object  |
+|-----------|--------|----------|---------|
+| ref       | <#002> | #002     | {name: "yue", work: 'engineer'|
+| ref_copy  | <#001> | #001     | 1,2,3,4 |
+
+## == and ===
+
+For primitive types, == and === are used to compare their values.
+
+When the equality operators, == and ===, are used on reference-type variables, it checks their references.
+
+Use the above examples:
+
+```javascript
+let ref = [1, 2, 3];
+let ref_copy = ref;
+console.log(ref == ref_copy); //true
+
+ref.push(4);
+console.log(ref == ref_copy); //true
+
+ref = {name: "yue", work: 'engineer'};
+console.log(ref == ref_copy); //false
+
+```
