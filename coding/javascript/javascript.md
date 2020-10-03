@@ -240,12 +240,14 @@ console.log(val, copy);
 ```
 
 Before the val = 2:
+
 | variable  | value  |
 |-----------|--------|
 | val       | 1      |
 | cop       | 1      |
 
 After the val = 2:
+
 | variable  | value  |
 |-----------|--------|
 | val       | 2      |
@@ -269,18 +271,21 @@ console.table(ref_copy);
 ```
 
 Before push(4):
+
 | variable  | value  | Address  | Object |
 |-----------|--------|----------|--------|
 | ref       | <#001> | #001     | 1,2,3  |
 | ref_copy  | <#001> |          |        |
 
 After push(4):
+
 | variable  | value  | Address  | Object |
 |-----------|--------|----------|--------|
 | ref       | <#001> | #001     | 1,2,3,4|
 | ref_copy  | <#001> |          |        |
 
 After reassign ref:
+
 | variable  | value  | Address  | Object  |
 |-----------|--------|----------|---------|
 | ref       | <#002> | #002     | {name: "yue", work: 'engineer'|
