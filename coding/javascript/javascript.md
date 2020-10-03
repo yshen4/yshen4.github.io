@@ -224,9 +224,12 @@ Javascript has 3 data types that are passed by reference: Array, Function, and O
 
 When a reference type value is copied to another variable using =, the address of that value is actually copied over as if it were a primitive. Objects are copied by reference instead of by value.
 
+When no reference to the object exists, the Javascript engine can perform garbage collection.
+
 ### Memory model for value and reference types
 
 Example for primitive data
+
 ```
 let val = 1;
 let copy = val;
@@ -235,6 +238,7 @@ console.log(val, copy);
 val = 2;
 console.log(val, copy);
 ```
+
 Before the val = 2:
 | variable  | value  |
 |-----------|--------|
@@ -248,6 +252,7 @@ After the val = 2:
 | cop       | 1      |
 
 Example for referenc data
+
 ```
 let ref = [1, 2, 3];
 let ref_copy = ref;
@@ -281,7 +286,7 @@ After reassign ref:
 | ref       | <#002> | #002     | {name: "yue", work: 'engineer'|
 | ref_copy  | <#001> | #001     | 1,2,3,4 |
 
-## == and ===
+### == and ===
 
 For primitive types, == and === are used to compare their values.
 
@@ -289,7 +294,7 @@ When the equality operators, == and ===, are used on reference-type variables, i
 
 Use the above examples:
 
-```javascript
+```
 let ref = [1, 2, 3];
 let ref_copy = ref;
 console.log(ref == ref_copy); //true
@@ -301,3 +306,17 @@ ref = {name: "yue", work: 'engineer'};
 console.log(ref == ref_copy); //false
 
 ```
+
+To compare values of 2 reference type variables, there are several ways:
+1. Convert them to string and compare: JSON.stringify
+2. Iterate the array or object to compare
+
+A more generic discussion is available on [StackOverflow](https://stackoverflow.com/questions/1068834/object-comparison-in-javascript)
+
+### Passing as parameters
+
+Passing in parameters follow assign = logic. 
+
+Pure functions don't change passing in state. 
+1. Paramters are value types, the function is always pure
+2. Parameters are reference types, the function shall make a copy and return the copy if necessary.
