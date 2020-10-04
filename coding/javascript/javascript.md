@@ -216,6 +216,20 @@ dino.walk();
 dino.teach();
 ```
 
+## == vs ===
+
+Javascript has 2 ways to test equality. 
+- Triple Equals (===): strict equality, which means both the type and the value to be the same.
+- Double equqals (==): loose equality, which means only the value. Double equals also performs type coercion.
+
+```
+77 == '77'; //true
+false == 0; //true
+
+77 === '77'; //false
+false === 0; //false
+```
+
 ## value type vs reference type
 
 Javascript has 5 primitive data types, which are passed by value: Boolean, null, undefined, String, and Number.
