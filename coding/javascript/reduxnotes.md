@@ -210,3 +210,9 @@ Javascript doesn't guarantee immutability, some libraries come handy:
 - immutable
 - immer
 - mori 
+
+## Redux vs ReactJs hooks
+
+1. [Medium post](https://medium.com/javascript-scene/do-react-hooks-replace-redux-210bab340672)
+2. https://www.sitepoint.com/replace-redux-react-hooks-context-api/
+3. [React handbook for beginners](https://www.freecodecamp.org/news/react-beginner-handbook/)
