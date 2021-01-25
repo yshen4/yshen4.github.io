@@ -24,6 +24,12 @@ I have met many developers in the field, and have used both C++ and Java extensi
 
 ## Dynamic programming
 
+Memoization
+- Memoization 
+
+Tabulation
+
+
 Important DP problems and algorithm design:
 - Shortest path
 - Text justification
