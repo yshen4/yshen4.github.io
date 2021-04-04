@@ -236,6 +236,117 @@ Suggestions:
 5. represent it in variable-length numberic system and shuffle digits
 6. choose a pair of odd integers x and y that are multiplicative inverses of each other (modulo 232), then multiply by x to obfuscate and multiply by y to restore, all multiplications are modulo 232 (source: ["A practical use of multiplicative inverses" by Eric Lippert](http://ericlippert.com/2013/11/14/a-practical-use-of-multiplicative-inverses/))
 
+## Attaching Values to Java Enum
+
+- Problem
+
+Java enum type provides a type safer way to use constant values by defining a finite set of values. However, enum value alone is not suitable for human-readable strings or non-string values.
+
+Our initial enum type Element is defined as follows, which is hard to read and understand what each enum value means.
+
+```java
+public enum Element {
+    H, HE, C, O
+}
+```
+
+- Solution
+The enum type is a special class type in Java, we can add constructors, fields and methods as we do with other classes. Because of this, we can enhance our enum to include the values we need.
+
+Although it's illegal to use the new operator for an enum, we can pass constructor arguments in the declaration list.
+
+1. Enhance the enum type with readable labels
+
+Enum supports constructor, we can achieve readability by adding a Constructor and a Final Field. With this functin, each enum value can be constructed with readonly label. We choose the label identifier instead of the name to avoid confusion with the predefined Enum.name() method.
+
+```java
+public enum Element {
+    H("Hydrogen"), 
+    HE("Helium"),
+    C("Carbon"),
+    O("Oxegen");
+
+    public final String label;
+
+    Element(String label) {
+       this.label = label;
+    }
+}
+```
+
+2. Enhance the enum type with label lookup
+
+Java provides a valueOf(String) method for all enum types, which maps the enum value string to enum value, for example "HE" to Element.HE.
+
+To support enum lookup with label, we need to add hashMap:
+
+```java
+public enum Element {
+    H("Hydrogen"), 
+    HE("Helium"),
+    C("Carbon"),
+    O("Oxegen"),
+    NIL("NoExists");
+
+    public final String label;
+    Element(String label) {
+       this.label = label;
+    }
+
+    private static final Map<String, Element> mapByLabel = new HashMap<>();
+    static {
+        for (Element el: values()) {
+            mapByLabel.put(el.label, el);
+        }
+    }
+
+    Element valueOfLabel(String label) {
+       if (mapByLabel.containsKey(label))
+           return mapByLabel.get(label);
+       else
+           return NIL;
+    }
+}
+```
+
+3. Enhance the enum type with multiple fields
+
+The Enum constructor can accept multiple values.
+
+```java
+public enum Element {
+    H("Hydrogen", 1.0),
+    HE("Helium", 4.0),
+    C("Carbon", 12.0),
+    O("Oxegen", 16.0),
+    NIL("NoExists", 0);
+    
+    public final String label;
+    public final double weight;
+    Element(String label, double weight) {
+       this.label = label;
+       this.weight = weight;
+    }
+    
+    private static final Map<String, Element> mapByLabel = new HashMap<>();
+    static {
+        for (Element el: values()) { 
+            mapByLabel.put(el.label, el);
+        }
+    }
+    
+    public static Element valueOfLabel(String label) {
+       if (mapByLabel.containsKey(label))
+           return mapByLabel.get(label);
+       else
+           return NIL;
+    }
+}
+```
+
+
+
+
 ### Reference
 1. [The "Double-Checked Locking is Broken" Declaration](http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html) 
 2. [more detailed description of compiler-based reorderings](http://gee.cs.oswego.edu/dl/cpj/jmm.html)
