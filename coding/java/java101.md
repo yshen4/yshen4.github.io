@@ -236,6 +236,11 @@ Suggestions:
 5. represent it in variable-length numberic system and shuffle digits
 6. choose a pair of odd integers x and y that are multiplicative inverses of each other (modulo 232), then multiply by x to obfuscate and multiply by y to restore, all multiplications are modulo 232 (source: ["A practical use of multiplicative inverses" by Eric Lippert](http://ericlippert.com/2013/11/14/a-practical-use-of-multiplicative-inverses/))
 
+### Reference
+1. [The "Double-Checked Locking is Broken" Declaration](http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html) 
+2. [more detailed description of compiler-based reorderings](http://gee.cs.oswego.edu/dl/cpj/jmm.html)
+3. [A new Java Memory Model and Thread specification](http://www.cs.umd.edu/~pugh/java/memoryModel)
+
 ## Attaching Values to Java Enum
 
 - Problem
@@ -345,9 +350,3 @@ public enum Element {
 ```
 
 
-
-
-### Reference
-1. [The "Double-Checked Locking is Broken" Declaration](http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html) 
-2. [more detailed description of compiler-based reorderings](http://gee.cs.oswego.edu/dl/cpj/jmm.html)
-3. [A new Java Memory Model and Thread specification](http://www.cs.umd.edu/~pugh/java/memoryModel)
