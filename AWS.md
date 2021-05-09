@@ -9,6 +9,7 @@ As Cloud becomes prominent, the virtualized infrastructure needs more tools to c
   * [CDK](infrastructure/AWS/CDK.md)
   * [Context and environment](infrastructure/AWS/CDK_context.md)
 - AWS services
+  * [VPC](infrastructure/AWS/VPC.md)
   * [Lambda](infrastructure/AWS/CDK_lambda.md)
   * [SNS](infrastructure/AWS/CDK_sns.md)
   * [SQS](infrastructure/AWS/CDK_sqs.md)
