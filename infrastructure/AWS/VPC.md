@@ -20,6 +20,17 @@ Core concepts are:
 
 ## VPC and commands
 
+### CIDR
+
+Private IP range conforms to RFC 1918:
+- 10.0.0.0/8: 10.0.0.0 - 10.255.255.255 (class A)
+- 172.16.0.0/12: 172.16.0.0 - 172.31.255.255 (class B)
+- 192.168.0.0/16: 192.168.0.0 - 192.168.255.255 (class C)
+
+Secondary CIDR can't overlap with primary CIDR. 
+You can't specify IPv6 CIDR, which is assigned by AWS at your request. 
+All IPv6 addresses are public, reachable from internet. 
+
 ### VPC
 - within a region
 
@@ -35,23 +46,48 @@ aws ec2 describe-vpcs --vpc-id vpc-0b39341d010ee6478 --profile fargate
 ### Subnet 
 - Like VLAN
 - within a AZ
+- CIDR in subnets should not overlap with each other (instances in a VPC are in one LAN)
+
+AWS reserves first 4 IP and last IP in the subnet, which can't be assigned to any instance
+- 192.168.0.0: network for broadcast
+- 192.168.0.1: implied router
+- 192.168.0.2: Amazon DNS server
+- 192.168.0.3: reserved
+- 192.168.0.255: broadcast IP address
 
 ```
 aws ec2 create-subnet --vpc-id vpc-0b39341d010ee6478 --cidr-block 192.168.0.0/24 --availability-zone us-west-2a  --profile fargate
 aws ec2 describe-subnets --subnet-ids subnet-02a787cb22db69c9f --profile fargate
 ```
 
-ENI (elastic network interface) — 
+### ENI (elastic network interface) 
 - network interface for instance
 - Can be detached from an instance
+- Each instance must have primary ENI, which connects to one subnet. Primary ENI can't be changed or moved to different subnet.
+- Each instance has a primary private IP in subnet CIDR, which is bound to primary ENI at its creation, can't change or remove it.
+- We can assign secondary private IP to a primary ENI, which must be in the same subnet as primary IP.
+- We can attach secondary ENI to an instance, those ENI can be in different subnets, but must be in the same AZ. 
 
 ```
 aws ec2 create-network-interface --private-ip-address 192.168.0.99 --subnet-id subnet-02a787cb22db69c9f --profile fargate
 aws ec2 describe-network-interfaces --network-interface-ids eni-00cc465d706a3e19f --profile fargate
 ```
 
-Internet gateway 
-- router
+### Internet gateway 
+- Internet gateway give instances ability to 
+  * get a public IP
+  * connect to the internet
+  * receive requests from internet (inbound)
+- One VPC one internet gateway
+- Default VPC has default internet gateway, custom VPC needs custom internet gateway, and associate them manually
+- To use an internet gateway, you must create a deault route in a route table that points to internet gateway as target.
+  * aws ec2 create-route --route-table-id rtb-<route table id> --destination-cidr-block "0.0.0.0/0"  --gateway-id igw-<gateway id>
+- router: implied router is a software function
+- route table
+  * In creation, VPC has a default route table called main route table, associate it with all subnets in the VPC
+  * A subnet can't exist without routing table. By default, it will associate with main route table of VPC.
+  * Every route table has local route, its destination is VPC CIDR, target is local, which allows instances in the VPC to communcate other instances in different subnets of the VPC.
+- Any subset is attached to a route table, the route table with internet gateway in public subnet, otherwise private subnet
 
 ```
 aws ec2 create-internet-gateway --profile fargate
@@ -60,9 +96,17 @@ aws ec2 describe-route-tables --filters Name=vpc-id,Values=vpc-0b39341d010ee6478
 aws ec2 create-route --route-table-id rtb-0a9cbff5674cf1bfd --destination-cidr-block "0.0.0.0/0"  --gateway-id igw-093bbac28c9ea0d9e  --profile fargate
 ```
 
-security group
+### NAT
+
+NAT gateway/devices translates private IP to public IP or vice versa so the private subnet instances can access internet for software upgrade etc.
+
+NAT devices must reside in different subnet than private subnet instances. Each subnet has its own route table. For private subnet, it has its default route to NAT device/gateway, while NAT device/gateway, it resides in public subnet which has default route to internet gateway. 
+
+### security group
 - firewall for instances
-- m : n
+- (protocol, cidr, port)
+- Whitelisting, default to deny
+- (m to n): a security group can be attached to multiple instances, and an instance can have multiple security group. 
 
 ```
 aws ec2 create-security-group --group-name "web-ssh" --description  "web and ssh traffic" --vpc-id vpc-0b39341d010ee6478 --profile fargate
@@ -72,7 +116,7 @@ aws ec2 authorize-security-group-ingress  --group-id sg-09bda85178ea66b93 --prot
 aws ec2 describe-security-groups --group-id sg-09bda85178ea66b93 --profile fargate
 ```
 
-NACL
+### NACL
 - stateless: no connection tracking, doesn’t automatically allow reply traffic.
 - Rules are numbered, processed based on the number. * is the default rule. 
 - firewall for subnet
@@ -81,7 +125,9 @@ NACL
 aws ec2 create-network-acl  --vpc-id vpc-0b39341d010ee6478 --profile fargate
 ```
 
-Inbound rule
+#### Inbound rule
+- (protocol, cidr, portRange, rule-number)
+- Evaluated based on ruleNumber sequence
 
 ```
 aws ec2 create-network-acl-entry --ingress --cidr-block "0.0.0.0/0" --protocol tcp --port-range "From=22,To=22" --rule-action allow --network-acl-id acl-0da6f3db6189257ca --rule-number 70  --profile fargate
@@ -89,17 +135,17 @@ aws ec2 create-network-acl-entry --ingress --cidr-block "54.240.196.172/32" --pr
 aws ec2 describe-network-acls --network-acl-id acl-0da6f3db6189257ca --profile fargate
 ```
 
-Outbound rule
+#### Outbound rule
 - NACL is stateless. 
 - to maintain compatibility, do not restrict outbound traffic using an NACL, instead, use security group to restrict outbound traffic.
 
-Public IP Address
+### Public IP Address
 - Reachable from internet. 
 - Not IP in RFC 1918 (192.168.0.0, routed in private network)
 - Require internet gateway
 - public IP address may change when reboot, or AWS maintenance
 
-Elastic IP address (EIP)
+### Elastic IP address (EIP)
 - EIP is allocated to the account, it persists until you release it.
 - EIP is in region, can’t be moved out of a region
 - EIP is attached to ENI, can move it to different ENIs
@@ -112,7 +158,12 @@ aws ec2 allocate-address --profile fargate
 aws ec2 associate-address --allocation-id eipalloc-08837e12a89b6b3b8 --network-interface-id  eni-00cc465d706a3e19f --profile fargate
 ```
 
-Transit gateay
+### 3 ways to connnect on-premise network with VPCs
+- VPN
+- AWS transit gateway
+- AWS direct connect
+
+### Transit gateay
 - Enable communication between multiple VPCs and on-premise network
 
 ```
