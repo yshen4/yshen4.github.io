@@ -17,3 +17,130 @@ Core concepts are:
 - CIDR block — Classless Inter-Domain Routing. An internet protocol address allocation and route aggregation methodology. See [Classless Inter-Domain Routing](http://en.wikipedia.org/wiki/CIDR_notation) in Wikipedia.
 - Security group - A stateful setting allows services to VPC
 - Network Access Control Lists - A stateless setting allow or deny services to VPC
+
+## VPC and commands
+
+### VPC
+- within a region
+
+```shell
+aws ec2 create-vpc --cidr-block 192.168.0.0/28 --profile fargate
+aws ec2 describe-vpcs --vpc-id vpc-0ca77f7a1eaa670da --profile fargate
+aws ec2 delete-vpc --vpc-id vpc-0ca77f7a1eaa670da --profile fargate
+
+aws ec2 create-vpc --cidr-block 192.168.0.0/16 --profile fargate
+aws ec2 describe-vpcs --vpc-id vpc-0b39341d010ee6478 --profile fargate
+```
+
+### Subnet 
+- Like VLAN
+- within a AZ
+
+```
+aws ec2 create-subnet --vpc-id vpc-0b39341d010ee6478 --cidr-block 192.168.0.0/24 --availability-zone us-west-2a  --profile fargate
+aws ec2 describe-subnets --subnet-ids subnet-02a787cb22db69c9f --profile fargate
+```
+
+ENI (elastic network interface) — 
+- network interface for instance
+- Can be detached from an instance
+
+```
+aws ec2 create-network-interface --private-ip-address 192.168.0.99 --subnet-id subnet-02a787cb22db69c9f --profile fargate
+aws ec2 describe-network-interfaces --network-interface-ids eni-00cc465d706a3e19f --profile fargate
+```
+
+Internet gateway 
+- router
+
+```
+aws ec2 create-internet-gateway --profile fargate
+aws ec2 attach-internet-gateway --internet-gateway-id igw-093bbac28c9ea0d9e --vpc-id vpc-0b39341d010ee6478 --profile fargate
+aws ec2 describe-route-tables --filters Name=vpc-id,Values=vpc-0b39341d010ee6478 --profile fargate
+aws ec2 create-route --route-table-id rtb-0a9cbff5674cf1bfd --destination-cidr-block "0.0.0.0/0"  --gateway-id igw-093bbac28c9ea0d9e  --profile fargate
+```
+
+security group
+- firewall for instances
+- m : n
+
+```
+aws ec2 create-security-group --group-name "web-ssh" --description  "web and ssh traffic" --vpc-id vpc-0b39341d010ee6478 --profile fargate
+aws ec2 authorize-security-group-ingress  --group-id sg-09bda85178ea66b93 --protocol tcp --cidr 0.0.0.0/0 --port 22  --profile fargate
+aws ec2 authorize-security-group-ingress  --group-id sg-09bda85178ea66b93 --protocol tcp --cidr 0.0.0.0/0 --port 80  --profile fargate
+aws ec2 authorize-security-group-ingress  --group-id sg-09bda85178ea66b93 --protocol tcp --cidr 0.0.0.0/0 --port 443  --profile fargate
+aws ec2 describe-security-groups --group-id sg-09bda85178ea66b93 --profile fargate
+```
+
+NACL
+- stateless: no connection tracking, doesn’t automatically allow reply traffic.
+- Rules are numbered, processed based on the number. * is the default rule. 
+- firewall for subnet
+
+```
+aws ec2 create-network-acl  --vpc-id vpc-0b39341d010ee6478 --profile fargate
+```
+
+Inbound rule
+
+```
+aws ec2 create-network-acl-entry --ingress --cidr-block "0.0.0.0/0" --protocol tcp --port-range "From=22,To=22" --rule-action allow --network-acl-id acl-0da6f3db6189257ca --rule-number 70  --profile fargate
+aws ec2 create-network-acl-entry --ingress --cidr-block "54.240.196.172/32" --protocol tcp --port-range "From=3389,To=3389" --rule-action allow --network-acl-id acl-0da6f3db6189257ca --rule-number 80  --profile fargate
+aws ec2 describe-network-acls --network-acl-id acl-0da6f3db6189257ca --profile fargate
+```
+
+Outbound rule
+- NACL is stateless. 
+- to maintain compatibility, do not restrict outbound traffic using an NACL, instead, use security group to restrict outbound traffic.
+
+Public IP Address
+- Reachable from internet. 
+- Not IP in RFC 1918 (192.168.0.0, routed in private network)
+- Require internet gateway
+- public IP address may change when reboot, or AWS maintenance
+
+Elastic IP address (EIP)
+- EIP is allocated to the account, it persists until you release it.
+- EIP is in region, can’t be moved out of a region
+- EIP is attached to ENI, can move it to different ENIs
+- EIP can only attach to one ENI
+- When EIP is attached to an ENI, its original public IP is replaced.
+- You can bring your own public IP (BYOIP), up to 5 address blocks per region
+
+```
+aws ec2 allocate-address --profile fargate
+aws ec2 associate-address --allocation-id eipalloc-08837e12a89b6b3b8 --network-interface-id  eni-00cc465d706a3e19f --profile fargate
+```
+
+Transit gateay
+- Enable communication between multiple VPCs and on-premise network
+
+```
+Create a new VPC and subnet
+aws ec2 create-vpc --cidr-block 172.17.0.0/16 --profile fargate
+aws ec2 create-subnet --vpc-id vpc-066860d387cd31fc4 --cidr-block 172.17.0.0/24 --availability-zone us-west-2b  --profile fargate
+aws ec2 describe-route-tables --filters Name=vpc-id,Values=vpc-066860d387cd31fc4 --profile fargate
+```
+
+Create transit gateway
+
+```
+aws ec2 create-transit-gateway --profile fargate
+aws ec2 describe-transit-gateways --transit-gateway-id tgw-0dd6d9997e516c4a8 --profile fargate
+aws ec2 create-transit-gateway-vpc-attachment --transit-gateway-id  tgw-0dd6d9997e516c4a8 --vpc-id vpc-066860d387cd31fc4 --subnet-ids subnet-051aa1d68a65c2add  --profile fargate
+aws ec2 create-transit-gateway-vpc-attachment --transit-gateway-id  tgw-0dd6d9997e516c4a8 --vpc-id vpc-0b39341d010ee6478 --subnet-ids subnet-02a787cb22db69c9f  --profile fargate
+
+aws ec2 search-transit-gateway-routes --transit-gateway-route-table-id tgw-rtb-0c3c917e07c11cddc --filters "Name=type,Values=static,propagated" --profile fargate
+
+aws ec2 create-route --route-table-id rtb-0a9cbff5674cf1bfd --destination-cidr-block "172.17.0.0/16" --transit-gateway-id tgw-0dd6d9997e516c4a8  --profile fargate
+aws ec2 create-route --route-table-id rtb-0f402bcb6a0812351 --destination-cidr-block "192.168.0.0/16" --transit-gateway-id tgw-0dd6d9997e516c4a8  --profile fargate
+
+aws ec2 create-transit-gateway-route --destination-cidr-block "192.168.100.64/29" --transit-gateway-route-table-id tgw-rtb-0c3c917e07c11cddc --blackhole --profile fargate
+aws ec2 search-transit-gateway-routes --transit-gateway-route-table-id tgw-rtb-0c3c917e07c11cddc --filters "Name=type,Values=static,propagated" --profile fargate
+
+aws ec2 delete-transit-gateway-vpc-attachment --transit-gateway-attachment-id tgw-attach-0562f8bbbbccb777c --profile fargate
+aws ec2 delete-transit-gateway-vpc-attachment --transit-gateway-attachment-id tgw-attach-092995ddfe103333e --profile fargate
+aws ec2 search-transit-gateway-routes --transit-gateway-route-table-id tgw-rtb-0c3c917e07c11cddc --filters "Name=type,Values=static,propagated" --profile fargate
+aws ec2 describe-transit-gateways --transit-gateway-id tgw-0dd6d9997e516c4a8 --profile fargate
+aws ec2 delete-transit-gateway --transit-gateway-id tgw-0dd6d9997e516c4a8 --profile fargate
+```
