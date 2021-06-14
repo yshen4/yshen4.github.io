@@ -48,7 +48,7 @@ High level design covers the big picture workflow and services
 
 2. Where to store?
   - Compare db options related to non-function requirements
-  - Hwot to scale write/read
+  - How to scale write/read
   - How to make both read/write faster?
   - How not to lose data
   - How to maintain data consistency?
@@ -79,7 +79,6 @@ Problem 1: Aggregate data
 
 ## Detailed design for processing
   - Deduplication cache
-  - 
 
 ### Ingestion path
 1. API

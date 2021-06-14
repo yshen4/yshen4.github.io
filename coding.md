@@ -36,3 +36,4 @@ My work started with C/C++, then moved to .net framework and C# (certifed Micros
 ## Misc
 1. [Code review guide](others/codereview.md)
 2. [Logging guide](others/logging.md)
+2. [System design](others/systemdesign.md)
