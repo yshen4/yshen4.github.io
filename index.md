@@ -8,3 +8,4 @@ I have been building software solutions deployed to on-premise and cloud environ
 - [Algorithms](algorithms.md)
 - [Coding](coding.md)
 - [Machine learning basics](ml/basics.md)
+- [Blockchain and money](blockchain.md)
