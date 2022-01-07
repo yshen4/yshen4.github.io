@@ -4,9 +4,17 @@ This wiki is the notes for [MIT 15.S12 Blockchain and Money](https://ocw.mit.edu
 
 ## Money, Ledgers, and Bitcoin
 
-Money
-FiatMoney
-Ledger
+### Money
+
+Money is a social contract that people share the consensus to use it for exchange, paying tax, etc.
+
+Money is typically issued by central bank, which is liability of the bank (IOU). But the central bank is backed by the government.
+
+### Fiat Money
+
+### Ledger
+
+Ledger is a recording of account activities. There are 2 types of ledgers: transaction ledger and  balance ledger.
 
 ## Blockchain Basics and Cryptography
 
